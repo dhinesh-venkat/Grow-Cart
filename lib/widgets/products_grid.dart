@@ -233,6 +233,9 @@ class _ProductsGridState extends State<ProductsGrid> {
                                           height: 20,
                                           width: 20,
                                           child: FloatingActionButton(
+                                            heroTag: _apiResponse
+                                                    .data[item].imageName +
+                                                "add",
                                             backgroundColor: Colors.white,
                                             onPressed: () => add(item),
                                             child: Icon(
@@ -249,6 +252,9 @@ class _ProductsGridState extends State<ProductsGrid> {
                                           height: 20,
                                           width: 20,
                                           child: FloatingActionButton(
+                                              heroTag: _apiResponse
+                                                      .data[item].imageName +
+                                                  "remove",
                                               backgroundColor: Colors.white,
                                               onPressed: () => sub(item),
                                               child:
@@ -283,7 +289,7 @@ class _ProductsGridState extends State<ProductsGrid> {
                                 // ),
                                 IconButton(
                                     icon: Icon(
-                                      Icons.shopping_cart_rounded,
+                                      Icons.shopping_basket,
                                       color: Colors.blue,
                                       size: 30,
                                     ),

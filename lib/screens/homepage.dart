@@ -61,7 +61,8 @@ class HomePage extends StatelessWidget {
                 child: Container(
                   height: sy(150),
                   width: double.infinity,
-                  margin: EdgeInsets.only(left: sx(5), right: sx(5), top: sx(5)),
+                  margin:
+                      EdgeInsets.only(left: sx(5), right: sx(5), top: sx(5)),
                   child: CarouselSlider(
                     items: imageSliders,
                     options: CarouselOptions(

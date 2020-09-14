@@ -1,14 +1,21 @@
+import 'package:easy_shop/main.dart';
 import 'package:http/http.dart' as http;
 import '../models/api_response.dart';
 import '../models/product.dart';
 import 'dart:convert';
-import '../main.dart';
 
 class ProductService {
   String url = MyApp.BASE_URL;
 
-  Future<APIResponse<List<Product>>> getProductList(String groupId,String subGroupId) {
-    return http.get(url + "/api/item?&pagenumber=1&pagesize=20&groupid="+ groupId+"&subgroupid=" + subGroupId).then((data) {
+  Future<APIResponse<List<Product>>> getProductList(
+      String groupId, String subGroupId) {
+    return http
+        .get(url +
+            "/api/item?&pagenumber=1&pagesize=20&groupid=" +
+            groupId +
+            "&subgroupid=" +
+            subGroupId)
+        .then((data) {
       if (data.statusCode == 200) {
         final jsonData = json.decode(data.body);
         final products = <Product>[];
@@ -17,10 +24,10 @@ class ProductService {
         }
         return APIResponse<List<Product>>(data: products);
       }
-      
+
       return APIResponse<List<Product>>(
           error: true, errorMessage: "An error occured");
     }).catchError((_) => APIResponse<List<Product>>(
-        error: true, errorMessage: "An error occured"));
+            error: true, errorMessage: "An error occured"));
   }
 }

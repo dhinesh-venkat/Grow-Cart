@@ -1,7 +1,10 @@
 // import 'package:device_preview/device_preview.dart';
-import 'package:device_preview/device_preview.dart';
+import 'package:easy_shop/PhLogin/phlogin.dart';
 import 'package:easy_shop/screens/cart_screen.dart';
+import 'package:easy_shop/screens/myapp_login.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import './screens/homepage.dart';
@@ -16,18 +19,19 @@ void setupLocator() {
   GetIt.I.registerLazySingleton(() => ProductService());
 }
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   setupLocator();
-  runApp(
-  //     DevicePreview(builder: (context) => ChangeNotifierProvider(
-  //   create: (context) => Cart(),
-  //   child: MyApp(),
-  // ),)
-      ChangeNotifierProvider(
-    create: (context) => Cart(),
-    child: MyApp(),
-  )
-  );
+  UserRepository userRepository = UserRepository();
+  runApp(BlocProvider(
+    create: (context) =>
+        AuthenticationBloc(userRepository: userRepository)..add(AppStarted()),
+    child: ChangeNotifierProvider(
+      create: (context) => Cart(),
+      child: MyAppLogin(userRepository: userRepository),
+    ),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -46,9 +50,13 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Poppins',
           textTheme: TextTheme(
             headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
-            headline3: TextStyle(fontSize: 36.0, fontWeight: FontWeight.bold, color: Colors.white),
-            headline4: TextStyle(fontSize: 24,color: Colors.white),
-            bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'Fryo',color: Colors.white),
+            headline3: TextStyle(
+                fontSize: 36.0,
+                fontWeight: FontWeight.bold,
+                color: Colors.white),
+            headline4: TextStyle(fontSize: 24, color: Colors.white),
+            bodyText2: TextStyle(
+                fontSize: 14.0, fontFamily: 'Fryo', color: Colors.white),
           )),
       home: HomePage(),
       routes: {

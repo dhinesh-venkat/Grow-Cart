@@ -1,8 +1,9 @@
+import 'package:easy_shop/main.dart';
+
 import '../models/group.dart';
 import '../models/api_response.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import '../main.dart';
 
 class GroupService {
   String url = MyApp.BASE_URL;

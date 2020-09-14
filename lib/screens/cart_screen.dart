@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_shop/Utils/theme.dart';
 import 'package:easy_shop/models/cart.dart';
+import 'package:easy_shop/screens/delivary_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +20,7 @@ class _CartScreenState extends State<CartScreen> {
   List<double> _price = [];
   List<CartItem> _cartList = [];
   double _totalAmount = 0.0;
-
+  bool loading = false;
   @override
   void initState() {
     _totalAmount = Provider.of<Cart>(context, listen: false).totalAmount;
@@ -115,10 +117,63 @@ class _CartScreenState extends State<CartScreen> {
               ],
             ),
             Expanded(
-                child: ListView.builder(
-              itemBuilder: (context, index) => getItem(_cartList[index], index),
-              itemCount: _cartList.length,
-            ))
+              child: ListView.builder(
+                itemBuilder: (context, index) =>
+                    getItem(_cartList[index], index),
+                itemCount: _cartList.length,
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              constraints: const BoxConstraints(maxWidth: 500),
+              child: RaisedButton(
+                onPressed: () {
+                  setState(() {
+                    loading = true;
+                  });
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DeliveryScreen(
+                          // user: user,
+                          ),
+                    ),
+                  );
+                },
+                color: MyColors.accentColor,
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(14))),
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                  child: loading
+                      ? Center(child: CircularProgressIndicator())
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(
+                              'Check Out',
+                              style: TextStyle(
+                                  color: MyColors.primaryColor, fontSize: 20),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(20)),
+                                color: MyColors.primaryColorLight,
+                              ),
+                              child: Icon(
+                                Icons.arrow_forward_ios,
+                                color: Colors.white,
+                                size: 16,
+                              ),
+                            )
+                          ],
+                        ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -179,7 +234,11 @@ class _CartScreenState extends State<CartScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Text('₹ ' + item.rate.toString()),
-                        IconButton(icon: Icon(Icons.delete), onPressed: () {},color: Colors.red,)
+                        IconButton(
+                          icon: Icon(Icons.delete),
+                          onPressed: () {},
+                          color: Colors.red,
+                        )
                       ],
                     ),
                   ),
@@ -197,9 +256,10 @@ class _CartScreenState extends State<CartScreen> {
                               size: 30,
                               color: Colors.white,
                             ),
-                            onPressed: ()  {
+                            onPressed: () {
                               HapticFeedback.lightImpact();
-                              sub(index);}),
+                              sub(index);
+                            }),
                         Text(
                           _quantities[index].toString(),
                           style: TextStyle(fontSize: 15),

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "212339213319",
+    "firebase_url": "https://sksgrocart-1c678.firebaseio.com",
+    "project_id": "sksgrocart-1c678",
+    "storage_bucket": "sksgrocart-1c678.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:212339213319:android:d31976ab7fbe31d06c16a2",
+        "android_client_info": {
+          "package_name": "com.example.easy_shop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "212339213319-e4o5iestnoimfb3u6obdviio15d71ce8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.easy_shop",
+            "certificate_hash": "a7ce59aeca03beaaab28aebeccfbfac62fc0eb30"
+          }
+        },
+        {
+          "client_id": "212339213319-6ibjb7t1hvaa1rgb7trijhqceu3j067q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_z9j36TGQQUWPVenn1A1eb3f8YdxE9wo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "212339213319-6ibjb7t1hvaa1rgb7trijhqceu3j067q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

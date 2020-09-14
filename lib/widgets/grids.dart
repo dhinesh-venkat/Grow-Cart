@@ -16,7 +16,6 @@ class Grids extends StatefulWidget {
 }
 
 class _GridsState extends State<Grids> {
-  
   GroupService get service => GetIt.I<GroupService>();
 
   APIResponse<List<Group>> _apiResponse;
@@ -44,7 +43,7 @@ class _GridsState extends State<Grids> {
     final deviceWidth = MediaQuery.of(context).size.width;
     final deviceHeight = MediaQuery.of(context).size.height;
     return RelativeBuilder(
-      builder: (context,screenHeight,screenWidth,sy,sx) {
+      builder: (context, screenHeight, screenWidth, sy, sx) {
         if (_isLoading) {
           return Center(
               child: Text(
@@ -110,7 +109,7 @@ class _GridsState extends State<Grids> {
                       ),
                     ),
                     Positioned.fill(
-                      bottom: 20,
+                        bottom: 20,
                         child: Align(
                           alignment: Alignment.bottomCenter,
                           child: Text(_apiResponse.data[item].value,

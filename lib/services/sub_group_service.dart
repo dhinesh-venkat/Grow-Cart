@@ -1,7 +1,8 @@
+import 'package:easy_shop/main.dart';
+
 import '../models/api_response.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import '../main.dart';
 import '../models/sub_group.dart';
 
 class SubGroupService {
