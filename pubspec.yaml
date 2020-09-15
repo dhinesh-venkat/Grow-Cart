@@ -51,6 +51,7 @@ dependencies:
   dio: ^3.0.2
   numeric_keyboard: ^1.0.0
   device_info:
+  location: ^3.0.2
 
 dev_dependencies:
   flutter_test:

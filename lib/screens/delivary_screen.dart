@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:easy_shop/Utils/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:flutter/services.dart';
+//import 'package:geolocator/geolocator.dart' as geo;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 
 class DeliveryScreen extends StatefulWidget {
   DeliveryScreen({Key key}) : super(key: key);
@@ -20,16 +22,33 @@ class _DeliveryScreenState extends State<DeliveryScreen> {
   TextEditingController contackNumber = TextEditingController();
   TextEditingController cardNumber = TextEditingController();
   bool loading = false;
-  LatLng _target;
+  bool blocation = false;
+  LocationData locationData;
   void getCurrentLocation() async {
-    Position position = await Geolocator()
-        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    setState(() {
-      _target = LatLng(
-        position.latitude,
-        position.longitude,
-      );
-      //isLoaded = true;
+    var location = Location();
+    location.changeSettings(
+        accuracy: LocationAccuracy.high, interval: 100, distanceFilter: 500);
+
+    location.hasPermission().then((value) async {
+      if (value == PermissionStatus.granted) {
+        locationData = await location.getLocation();
+        print(locationData.latitude);
+        print(locationData.longitude);
+        setState(() {
+          blocation = true;
+        });
+      }
+      if (value != PermissionStatus.granted) {
+        await location.requestPermission();
+        locationData = await location.getLocation();
+        print(locationData.latitude);
+        print(locationData.longitude);
+        if (blocation == false) {
+          setState(() {
+            blocation = true;
+          });
+        }
+      }
     });
   }
 
@@ -65,9 +84,15 @@ class _DeliveryScreenState extends State<DeliveryScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           SizedBox(width: 10),
-                          CircularProgressIndicator(),
+                          blocation
+                              ? Icon(
+                                  Icons.done,
+                                  color: Colors.white,
+                                  size: 40,
+                                )
+                              : CircularProgressIndicator(),
                           SizedBox(
-                            width: 5,
+                            width: 15,
                           ),
                           Center(
                             child:
@@ -257,28 +282,32 @@ so please enable GPS'''),
                           loading = true;
                         });
                       },
-                      color: MyColors.primaryColor,
+                      color: MyColors.accentColor,
                       shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(14))),
                       child: Container(
                         padding: const EdgeInsets.symmetric(
                             vertical: 8, horizontal: 8),
                         child: loading
-                            ? Center(child: CircularProgressIndicator())
+                            ? Center(
+                                child: CircularProgressIndicator(
+                                backgroundColor: Colors.black,
+                              ))
                             : Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
                                   Text(
                                     'Next',
-                                    style: TextStyle(color: Colors.white),
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 20),
                                   ),
                                   Container(
                                     padding: const EdgeInsets.all(8),
                                     decoration: BoxDecoration(
                                       borderRadius: const BorderRadius.all(
                                           Radius.circular(20)),
-                                      color: MyColors.accentColor,
+                                      color: MyColors.primaryColorLight,
                                     ),
                                     child: Icon(
                                       Icons.arrow_forward_ios,

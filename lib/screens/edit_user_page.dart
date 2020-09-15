@@ -7,12 +7,9 @@ import 'package:easy_shop/PhLogin/phlogin.dart';
 import 'package:easy_shop/Utils/edit_text_utils.dart';
 import 'package:easy_shop/Utils/theme.dart';
 import 'package:easy_shop/Utils/validators.dart';
-import 'package:easy_shop/models/cart.dart';
+import 'package:easy_shop/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import '../main.dart';
 
 class EditUserDetail extends StatefulWidget {
   @override
@@ -272,8 +269,9 @@ class _EditUserDetailState extends State<EditUserDetail> {
                               "deviceId": await _getId(),
                             },
                           ).whenComplete(() {
-                            Navigator.of(context).pushNamedAndRemoveUntil(
-                                '/myApp', (route) => false);
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) => MyApp()));
                             print('im done');
                           }).catchError((error) {
                             print(error);
