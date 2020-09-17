@@ -3,7 +3,6 @@ import 'package:easy_shop/PhLogin/Authentication/authentication_bloc.dart';
 import 'package:easy_shop/Utils/theme.dart';
 import 'package:easy_shop/main.dart';
 import 'package:easy_shop/screens/edit_user_page.dart';
-import 'package:easy_shop/screens/homepage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';

@@ -29,6 +29,12 @@ class _EditUserDetailState extends State<EditUserDetail> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+    authenticationBloc.close();
+  }
+
   Future<String> _getId() async {
     var deviceInfo = DeviceInfoPlugin();
     if (Platform.isIOS) {
@@ -41,6 +47,7 @@ class _EditUserDetailState extends State<EditUserDetail> {
       print(androidDeviceInfo.androidId);
       return androidDeviceInfo.androidId; // unique ID on Android
     } else if (Platform.isWindows) {}
+    return "OtherPlatform";
   }
 
   @override

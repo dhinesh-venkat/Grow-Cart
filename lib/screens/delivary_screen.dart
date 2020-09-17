@@ -1,12 +1,8 @@
-import 'dart:async';
-
 import 'package:easy_shop/PhLogin/Model/location_detail.dart';
-import 'package:easy_shop/services/location_serviced.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:easy_shop/Utils/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:geolocator/geolocator.dart' as geo;
 import 'package:location/location.dart';
 import 'package:provider/provider.dart';
 

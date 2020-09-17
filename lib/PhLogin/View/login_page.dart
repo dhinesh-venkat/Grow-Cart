@@ -30,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  Future<bool> loginUser(String phone, BuildContext context) async {
+  Future<void> loginUser(String phone, BuildContext context) async {
     FirebaseAuth _auth = FirebaseAuth.instance;
     //bool x = false;
     _auth.verifyPhoneNumber(

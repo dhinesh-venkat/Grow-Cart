@@ -130,22 +130,24 @@ class _CartScreenState extends State<CartScreen> {
               constraints: const BoxConstraints(maxWidth: 500),
               child: RaisedButton(
                 onPressed: () {
-                  setState(() {
-                    loading = true;
-                  });
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) {
-                      return StreamProvider<UserLocation>(
-                        create: (context) => LocationService().locationStream,
-                        child: DeliveryScreen(),
-                      );
-                    }
-                        // } => DeliveryScreen(
-                        //     // user: user,
-                        //     ),
-                        ),
-                  );
+                  if (_cartList.length > 0) {
+                    setState(() {
+                      loading = true;
+                    });
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) {
+                        return StreamProvider<UserLocation>(
+                          create: (context) => LocationService().locationStream,
+                          child: DeliveryScreen(),
+                        );
+                      }
+                          // } => DeliveryScreen(
+                          //     // user: user,
+                          //     ),
+                          ),
+                    );
+                  }
                 },
                 color: MyColors.accentColor,
                 shape: const RoundedRectangleBorder(
