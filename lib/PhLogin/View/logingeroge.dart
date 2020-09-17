@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_shop/Utils/theme.dart';
 import 'package:easy_shop/main.dart';
 import 'package:easy_shop/screens/edit_user_page.dart';
-import 'package:easy_shop/screens/homepage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
@@ -66,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => HomePage(),
+                        builder: (context) => MyApp(),
                       ),
                     );
                   } else {
@@ -93,17 +92,27 @@ class _LoginPageState extends State<LoginPage> {
         },
         codeSent: (String verificationId, [int forceResendingToken]) {
           // if (x == false) {
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                builder: (context) => OtpPage(
-                  verificationId: verificationId,
-                  email: emailController.text.trim(),
-                  name: nameController.text.trim(),
-                  phNo: phoneController.text.trim(),
-                ),
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => OtpPage(
+                verificationId: verificationId,
+                email: emailController.text.trim(),
+                name: nameController.text.trim(),
+                phNo: phoneController.text.trim(),
               ),
-              (route) => false);
+            ),
+          );
+          // Navigator.p(
+          //     context,
+          //     MaterialPageRoute(
+          //       builder: (context) => OtpPage(
+          //         verificationId: verificationId,
+          //         email: emailController.text.trim(),
+          //         name: nameController.text.trim(),
+          //         phNo: phoneController.text.trim(),
+          //       ),
+          //     ),
+          //     (route) => false);
           // Navigator.push(
           //   context,
           //   MaterialPageRoute(

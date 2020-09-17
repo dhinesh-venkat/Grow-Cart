@@ -1,10 +1,14 @@
+import 'dart:async';
+
+import 'package:easy_shop/PhLogin/Model/location_detail.dart';
+import 'package:easy_shop/services/location_serviced.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:easy_shop/Utils/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-//import 'package:geolocator/geolocator.dart' as geo;
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:geolocator/geolocator.dart' as geo;
 import 'package:location/location.dart';
+import 'package:provider/provider.dart';
 
 class DeliveryScreen extends StatefulWidget {
   DeliveryScreen({Key key}) : super(key: key);
@@ -14,6 +18,9 @@ class DeliveryScreen extends StatefulWidget {
 }
 
 class _DeliveryScreenState extends State<DeliveryScreen> {
+  LocationData currentLocation;
+  //StreamSubscription<LocationData> locationSubscription;
+  // Location userLocation = Location();
   //bool gmapSelected = false;
   TextEditingController doorNo = TextEditingController();
   TextEditingController street = TextEditingController();
@@ -23,43 +30,19 @@ class _DeliveryScreenState extends State<DeliveryScreen> {
   TextEditingController cardNumber = TextEditingController();
   bool loading = false;
   bool blocation = false;
-  LocationData locationData;
-  void getCurrentLocation() async {
-    var location = Location();
-    location.changeSettings(
-        accuracy: LocationAccuracy.high, interval: 100, distanceFilter: 500);
-
-    location.hasPermission().then((value) async {
-      if (value == PermissionStatus.granted) {
-        locationData = await location.getLocation();
-        print(locationData.latitude);
-        print(locationData.longitude);
-        setState(() {
-          blocation = true;
-        });
-      }
-      if (value != PermissionStatus.granted) {
-        await location.requestPermission();
-        locationData = await location.getLocation();
-        print(locationData.latitude);
-        print(locationData.longitude);
-        if (blocation == false) {
-          setState(() {
-            blocation = true;
-          });
-        }
-      }
-    });
-  }
-
-  @override
-  void initState() {
-    getCurrentLocation();
-    super.initState();
-  }
+  var userLocation;
 
   @override
   Widget build(BuildContext context) {
+    userLocation = Provider.of<UserLocation>(context, listen: true);
+    if (userLocation != null) {
+      setState(() {
+        blocation = true;
+      });
+      print(userLocation.latitude.toString() +
+          "long" +
+          userLocation.longitude.toString());
+    }
     return Scaffold(
       //  resizeToAvoidBottomPadding: true,
       appBar: AppBar(
@@ -199,76 +182,11 @@ so please enable GPS'''),
                     ),
                   ),
                   SizedBox(
-                    height: 5,
-                  ),
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.center,
-                  //   children: [
-                  //     Center(
-                  //       child: Text('SKS CARD HOLDER?',
-                  //           style: TextStyle(
-                  //               color: Colors.red,
-                  //               fontWeight: FontWeight.bold,
-                  //               fontSize: 20)),
-                  //     )
-                  //   ],
-                  // ),
-                  SizedBox(
                     height: 15,
                   ),
-                  // Row(
-                  //   crossAxisAlignment: CrossAxisAlignment.start,
-                  //   mainAxisAlignment: MainAxisAlignment.center,
-                  //   children: [
-                  //     Center(
-                  //       child: Text(
-                  //         'Card or Phone Number',
-                  //         style: TextStyle(
-                  //             color: Colors.orange,
-                  //             fontWeight: FontWeight.bold,
-                  //             fontSize: 17),
-                  //       ),
-                  //     )
-                  //   ],
-                  // ),
                   SizedBox(
                     height: 10,
                   ),
-                  // Row(
-                  //   crossAxisAlignment: CrossAxisAlignment.start,
-                  //   mainAxisAlignment: MainAxisAlignment.center,
-                  //   children: [
-                  //     Expanded(flex: 1, child: SizedBox()),
-                  //     Expanded(
-                  //       flex: 2,
-                  //       child: Container(
-                  //         height: 40,
-                  //         child: TextField(
-                  //           controller: cardNumber,
-                  //           autocorrect: true,
-                  //           decoration: InputDecoration(
-                  //             // hintText: 'Type Text Here...',
-                  //             hintStyle: TextStyle(color: Colors.grey),
-                  //             filled: true,
-                  //             fillColor: Colors.white70,
-                  //             enabledBorder: OutlineInputBorder(
-                  //               borderRadius:
-                  //                   BorderRadius.all(Radius.circular(12.0)),
-                  //               borderSide:
-                  //                   BorderSide(color: Colors.red, width: 1),
-                  //             ),
-                  //             focusedBorder: OutlineInputBorder(
-                  //               borderRadius:
-                  //                   BorderRadius.all(Radius.circular(10.0)),
-                  //               borderSide: BorderSide(color: Colors.red),
-                  //             ),
-                  //           ),
-                  //         ),
-                  //       ),
-                  //     ),
-                  //     Expanded(flex: 1, child: SizedBox()),
-                  //   ],
-                  // ),
                   SizedBox(
                     height: 15,
                   ),
@@ -326,6 +244,7 @@ so please enable GPS'''),
           ),
         ),
       ),
+      // ),
     );
   }
 }

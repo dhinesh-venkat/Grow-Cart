@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_shop/PhLogin/Model/location_detail.dart';
 import 'package:easy_shop/Utils/theme.dart';
 import 'package:easy_shop/models/cart.dart';
 import 'package:easy_shop/screens/delivary_screen.dart';
+import 'package:easy_shop/services/location_serviced.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -133,11 +135,16 @@ class _CartScreenState extends State<CartScreen> {
                   });
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) => DeliveryScreen(
-                          // user: user,
-                          ),
-                    ),
+                    MaterialPageRoute(builder: (context) {
+                      return StreamProvider<UserLocation>(
+                        create: (context) => LocationService().locationStream,
+                        child: DeliveryScreen(),
+                      );
+                    }
+                        // } => DeliveryScreen(
+                        //     // user: user,
+                        //     ),
+                        ),
                   );
                 },
                 color: MyColors.accentColor,

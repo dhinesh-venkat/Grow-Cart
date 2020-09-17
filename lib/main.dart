@@ -2,6 +2,7 @@
 import 'package:easy_shop/PhLogin/phlogin.dart';
 import 'package:easy_shop/screens/cart_screen.dart';
 import 'package:easy_shop/screens/myapp_login.dart';
+import 'package:easy_shop/services/location_serviced.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,6 +24,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   setupLocator();
+  LocationService();
   UserRepository userRepository = UserRepository();
   runApp(BlocProvider(
     create: (context) =>

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_shop/PhLogin/Authentication/authentication_bloc.dart';
 import 'package:easy_shop/Utils/theme.dart';
+import 'package:easy_shop/main.dart';
 import 'package:easy_shop/screens/edit_user_page.dart';
 import 'package:easy_shop/screens/homepage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -178,7 +179,7 @@ class _OtpPageState extends State<OtpPage> {
                                   Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => HomePage(),
+                                      builder: (context) => MyApp(),
                                     ),
                                   );
                                 } else {
