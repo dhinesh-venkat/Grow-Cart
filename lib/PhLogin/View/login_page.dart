@@ -211,7 +211,7 @@ class _LoginPageState extends State<LoginPage> {
                         child: CupertinoTextField(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           decoration: BoxDecoration(
-                              border: Border.all(color: MyColors.accentColor),
+                              border: Border.all(color: Colors.blue),
                               color: Colors.white,
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(20))),
@@ -230,7 +230,7 @@ class _LoginPageState extends State<LoginPage> {
                         child: CupertinoTextField(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           decoration: BoxDecoration(
-                            border: Border.all(color: MyColors.accentColor),
+                            border: Border.all(color: Colors.blue),
                             color: Colors.white,
                             borderRadius: const BorderRadius.all(
                               Radius.circular(20),
@@ -251,7 +251,7 @@ class _LoginPageState extends State<LoginPage> {
                         child: CupertinoTextField(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           decoration: BoxDecoration(
-                              border: Border.all(color: MyColors.accentColor),
+                              border: Border.all(color: Colors.blue),
                               color: Colors.white,
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(20))),
