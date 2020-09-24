@@ -26,6 +26,7 @@ class _MyAppState extends State<MyAppLogin> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Easy Shop',
       theme: ThemeData(
           primaryColor: Color.fromRGBO(66, 67, 69, 1),

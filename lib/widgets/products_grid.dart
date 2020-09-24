@@ -92,6 +92,7 @@ class _ProductsGridState extends State<ProductsGrid> {
       _selectedPackage[index] = value;
       _selectedPrices[index]['mrp'] = _prices[index]['mrp'][_temp];
       _selectedPrices[index]['sr'] = _prices[index]['sr'][_temp];
+      _isAdded[index] = false;
     });
   }
 
@@ -170,13 +171,10 @@ class _ProductsGridState extends State<ProductsGrid> {
                                   offset: Offset(-10, -10),
                                   blurRadius: 10),
                             ]),
-                        child: Padding(
-                          padding: const EdgeInsets.all(40.0),
-                          child: CachedNetworkImage(
-                              placeholder: (context, url) => Image.network(
-                                  'https://cdn.pixabay.com/photo/2017/03/09/12/31/error-2129569_960_720.jpg'),
-                              imageUrl: _apiResponse.data[item].imageName),
-                        ),
+                        child: CachedNetworkImage(
+                            placeholder: (context, url) => Image.network(
+                                'https://cdn.pixabay.com/photo/2017/03/09/12/31/error-2129569_960_720.jpg'),
+                            imageUrl: _apiResponse.data[item].imageName),
                       ),
                     ),
                     Padding(
