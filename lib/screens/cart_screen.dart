@@ -33,145 +33,147 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final cart = Provider.of<Cart>(context);
-
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        bottomOpacity: 0,
-        backgroundColor: Theme.of(context).primaryColor,
-        actions: [
-          FlatButton(
-              onPressed: () {
-                cart.clear();
-              },
-              child: Text(
-                'Clear',
-                style: TextStyle(color: Colors.blue.shade200),
-              ))
-        ],
-      ),
-      body: Container(
-        color: Theme.of(context).primaryColor,
-        child: Column(
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                Text(
-                  'Cart',
-                  style: Theme.of(context).textTheme.headline3,
-                ),
-                Row(
-                  children: [
-                    Text(
-                      '${cart.itemCount} items',
-                      style: Theme.of(context).textTheme.bodyText2,
-                    ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    Container(
-                      height: 60,
-                      width: 140,
-                      child: RaisedButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18)),
-                        color: Colors.black,
-                        onPressed: () {},
-                        child: FittedBox(
-                          fit: BoxFit.cover,
-                          child: Text('₹ ' + cart.totalAmount.toString(),
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 25,
-                                  fontFamily: 'Fryo',
-                                  fontWeight: FontWeight.bold)),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ],
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemBuilder: (context, index) => CartListItem(
-                  product: cart.productList[index],
-                  item: cart.itemList[index],
-                  addItemCallback: (p, i) => cart.addItem(
-                    p,
-                    i.rate,
-                    i.itemName,
-                    i.imageUrl,
-                    i.total,
-                    i.quantity,
-                  ),
-                  subItemCallback: (p, i) => cart.removeSingleItem(p),
-                  removeItemCallback: (p, i) => cart.removeItem(p, i),
-                ),
-                itemCount: cart.items.length,
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              constraints: const BoxConstraints(maxWidth: 500),
-              child: RaisedButton(
+    return Consumer<Cart>(
+      builder: (context, cart, child) => Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          bottomOpacity: 0,
+          backgroundColor: Theme.of(context).primaryColor,
+          actions: [
+            FlatButton(
                 onPressed: () {
-                  if (cart.items.length > 0) {
-                    setState(() {
-                      loading = true;
-                    });
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) {
-                        return StreamProvider<UserLocation>(
-                          create: (context) => LocationService().locationStream,
-                          child: DeliveryScreen(),
-                        );
-                      }
-                          // } => DeliveryScreen(
-                          //     // user: user,
-                          //     ),
-                          ),
-                    );
-                  }
+                  cart.clear();
                 },
-                color: MyColors.accentColor,
-                shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(14))),
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                  child: loading
-                      ? Center(child: CircularProgressIndicator())
-                      : Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Text(
-                              'Check Out',
-                              style: TextStyle(
-                                  color: MyColors.primaryColor, fontSize: 20),
-                            ),
-                            Container(
-                              padding: const EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(20)),
-                                color: MyColors.primaryColorLight,
-                              ),
-                              child: Icon(
-                                Icons.arrow_forward_ios,
-                                color: Colors.white,
-                                size: 16,
-                              ),
-                            )
-                          ],
+                child: Text(
+                  'Clear',
+                  style: TextStyle(color: Colors.blue.shade200),
+                ))
+          ],
+        ),
+        body: Container(
+          color: Theme.of(context).primaryColor,
+          child: Column(
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  Text(
+                    'Cart',
+                    style: Theme.of(context).textTheme.headline3,
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        '${cart.itemCount} items',
+                        style: Theme.of(context).textTheme.bodyText2,
+                      ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Container(
+                        height: 60,
+                        width: 140,
+                        child: RaisedButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18)),
+                          color: Colors.black,
+                          onPressed: () {},
+                          child: FittedBox(
+                            fit: BoxFit.cover,
+                            child: Text('₹ ' + cart.totalAmount.toString(),
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 25,
+                                    fontFamily: 'Fryo',
+                                    fontWeight: FontWeight.bold)),
+                          ),
                         ),
+                      )
+                    ],
+                  ),
+                ],
+              ),
+              Expanded(
+                child: ListView.builder(
+                  itemBuilder: (context, index) => CartListItem(
+                    product: cart.productList[index],
+                    item: cart.itemList[index],
+                    addItemCallback: (p, i) => cart.addItem(
+                      p,
+                      i.rate,
+                      i.itemName,
+                      i.imageUrl,
+                      i.total,
+                      i.quantity,
+                    ),
+                    subItemCallback: (p, i) => cart.removeSingleItem(p),
+                    removeItemCallback: (p, i) => cart.removeItem(p, i),
+                  ),
+                  itemCount: cart.items.length,
                 ),
               ),
-            ),
-          ],
+              Container(
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                constraints: const BoxConstraints(maxWidth: 500),
+                child: RaisedButton(
+                  onPressed: () {
+                    if (cart.items.length > 0) {
+                      setState(() {
+                        loading = true;
+                      });
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) {
+                          return StreamProvider<UserLocation>(
+                            create: (context) =>
+                                LocationService().locationStream,
+                            child: DeliveryScreen(),
+                          );
+                        }
+                            // } => DeliveryScreen(
+                            //     // user: user,
+                            //     ),
+                            ),
+                      );
+                    }
+                  },
+                  color: MyColors.accentColor,
+                  shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(14))),
+                  child: Container(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                    child: loading
+                        ? Center(child: CircularProgressIndicator())
+                        : Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text(
+                                'Check Out',
+                                style: TextStyle(
+                                    color: MyColors.primaryColor, fontSize: 20),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(20)),
+                                  color: MyColors.primaryColorLight,
+                                ),
+                                child: Icon(
+                                  Icons.arrow_forward_ios,
+                                  color: Colors.white,
+                                  size: 16,
+                                ),
+                              )
+                            ],
+                          ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
