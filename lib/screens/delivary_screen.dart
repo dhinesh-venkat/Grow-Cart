@@ -22,7 +22,7 @@ class _DeliveryScreenState extends State<DeliveryScreen> {
   TextEditingController street = TextEditingController();
   TextEditingController address = TextEditingController();
   TextEditingController pincode = TextEditingController();
-  TextEditingController contackNumber = TextEditingController();
+  TextEditingController contactNumber = TextEditingController();
   TextEditingController cardNumber = TextEditingController();
   bool loading = false;
   bool blocation = false;
@@ -82,109 +82,13 @@ so please enable GPS'''),
                       ),
                     ),
                   ),
-                  Container(
-                    height: 40,
-                    constraints: const BoxConstraints(maxWidth: 500),
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 10),
-                    child: CupertinoTextField(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      decoration: BoxDecoration(
-                          border: Border.all(color: MyColors.accentColor),
-                          color: Colors.white,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(20))),
-                      controller: doorNo,
-                      //clearButtonMode: OverlayVisibilityMode.editing,
-                      keyboardType: TextInputType.streetAddress,
-                      maxLines: 1,
-                      placeholder: 'Door No',
-                    ),
-                  ),
-                  Container(
-                    height: 40,
-                    constraints: const BoxConstraints(maxWidth: 500),
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 10),
-                    child: CupertinoTextField(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      decoration: BoxDecoration(
-                          border: Border.all(color: MyColors.accentColor),
-                          color: Colors.white,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(20))),
-                      controller: street,
-                      //clearButtonMode: OverlayVisibilityMode.editing,
-                      keyboardType: TextInputType.streetAddress,
-                      maxLines: 1,
-                      placeholder: 'Street Name',
-                    ),
-                  ),
-                  Container(
-                    height: 40,
-                    constraints: const BoxConstraints(maxWidth: 500),
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 10),
-                    child: CupertinoTextField(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      decoration: BoxDecoration(
-                          border: Border.all(color: MyColors.accentColor),
-                          color: Colors.white,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(20))),
-                      controller: address,
-                      //clearButtonMode: OverlayVisibilityMode.editing,
-                      keyboardType: TextInputType.multiline,
-                      maxLines: 1,
-                      placeholder: 'Address',
-                    ),
-                  ),
-                  Container(
-                    height: 40,
-                    constraints: const BoxConstraints(maxWidth: 500),
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 10),
-                    child: CupertinoTextField(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      decoration: BoxDecoration(
-                          border: Border.all(color: MyColors.accentColor),
-                          color: Colors.white,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(20))),
-                      controller: pincode,
-                      //clearButtonMode: OverlayVisibilityMode.editing,
-                      keyboardType: TextInputType.number,
-                      maxLines: 1,
-                      placeholder: 'Area Pincode',
-                    ),
-                  ),
-                  Container(
-                    height: 40,
-                    constraints: const BoxConstraints(maxWidth: 500),
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 10),
-                    child: CupertinoTextField(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      decoration: BoxDecoration(
-                          border: Border.all(color: MyColors.accentColor),
-                          color: Colors.white,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(20))),
-                      controller: contackNumber,
-                      //clearButtonMode: OverlayVisibilityMode.editing,
-                      keyboardType: TextInputType.number,
-                      maxLines: 1,
-                      placeholder: 'Contact Number',
-                    ),
-                  ),
+                  cupertinoTextField(doorNo,TextInputType.streetAddress,"Door No"),
+                  cupertinoTextField(street,TextInputType.streetAddress,"Street Name"),
+                  cupertinoTextField(address,TextInputType.multiline,"Address"),
+                  cupertinoTextField(pincode,TextInputType.number,"Area Pincode"),
+                  cupertinoTextField(contactNumber,TextInputType.number,"Contact Number"),
                   SizedBox(
-                    height: 15,
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  SizedBox(
-                    height: 15,
+                    height: 45,
                   ),
                   Container(
                     margin: const EdgeInsets.symmetric(
@@ -205,7 +109,7 @@ so please enable GPS'''),
                         child: loading
                             ? Center(
                                 child: CircularProgressIndicator(
-                                backgroundColor: Colors.black,
+                                backgroundColor: Colors.white,
                               ))
                             : Row(
                                 mainAxisAlignment:
@@ -214,18 +118,18 @@ so please enable GPS'''),
                                   Text(
                                     'Next',
                                     style: TextStyle(
-                                        color: Colors.black, fontSize: 20),
+                                        color: Colors.white, fontSize: 20),
                                   ),
                                   Container(
                                     padding: const EdgeInsets.all(8),
                                     decoration: BoxDecoration(
                                       borderRadius: const BorderRadius.all(
                                           Radius.circular(20)),
-                                      color: MyColors.primaryColorLight,
+                                      color: Colors.white,
                                     ),
                                     child: Icon(
                                       Icons.arrow_forward_ios,
-                                      color: Colors.white,
+                                      color: Colors.black,
                                       size: 16,
                                     ),
                                   )
@@ -241,6 +145,26 @@ so please enable GPS'''),
         ),
       ),
       // ),
+    );
+  }
+
+  Widget cupertinoTextField(TextEditingController controller, TextInputType textInputType, String placeHolder) {
+    return Container(
+      height: 40,
+      constraints: const BoxConstraints(maxWidth: 500),
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      child: CupertinoTextField(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        decoration: BoxDecoration(
+            border: Border.all(color: Colors.blue),
+            color: Colors.white,
+            borderRadius: const BorderRadius.all(Radius.circular(20))),
+        controller: controller,
+        //clearButtonMode: OverlayVisibilityMode.editing,
+        keyboardType: textInputType,
+        maxLines: 1,
+        placeholder: placeHolder,
+      ),
     );
   }
 }
