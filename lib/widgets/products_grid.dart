@@ -129,7 +129,6 @@ class _ProductsGridState extends State<ProductsGrid> {
   @override
   Widget build(BuildContext context) {
     final double deviceWidth = MediaQuery.of(context).size.width;
-    final double deviceHeight = MediaQuery.of(context).size.height;
     _crossAxisCount = getDeviceType(deviceWidth);
     final cart = Provider.of<Cart>(context, listen: false);
     print("GroupId : " + widget.groupId);
