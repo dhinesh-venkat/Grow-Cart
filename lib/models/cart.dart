@@ -55,30 +55,26 @@ class Cart with ChangeNotifier {
     double total,
     int quantity,
   ) {
-    if (_items.containsKey(productId)) {
-      _items.update(
-        productId,
-        (existingItem) => CartItem(
-          itemId: existingItem.itemId,
-          itemName: existingItem.itemName,
-          rate: existingItem.rate,
-          imageUrl: existingItem.imageUrl,
-          quantity: existingItem.quantity + 1,
-          total: existingItem.total + existingItem.rate,
-        ),
-      );
-    } else {
-      _items.putIfAbsent(
-          productId,
-          () => CartItem(
-                itemId: DateTime.now().toString(),
-                itemName: title,
-                rate: price,
-                quantity: quantity,
-                imageUrl: imageUrl,
-                total: total,
-              ));
-    }
+    _items.update(
+      productId,
+      (existingItem) => CartItem(
+        itemId: existingItem.itemId,
+        itemName: existingItem.itemName,
+        rate: existingItem.rate,
+        imageUrl: existingItem.imageUrl,
+        quantity: existingItem.quantity + 1,
+        total: existingItem.total + existingItem.rate,
+      ),
+      ifAbsent: () => CartItem(
+        itemId: DateTime.now().toString(),
+        itemName: title,
+        rate: price,
+        quantity: quantity + 1,
+        imageUrl: imageUrl,
+        total: total,
+      ),
+    );
+
     notifyListeners();
   }
 
