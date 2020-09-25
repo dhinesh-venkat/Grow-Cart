@@ -21,6 +21,7 @@ class _CartScreenState extends State<CartScreen> {
   List<int> _quantities = [];
   List<double> _price = [];
   List<CartItem> _cartList = [];
+  List<String> _uniqueId = [];
   double _totalAmount = 0.0;
   bool loading = false;
   @override
@@ -50,11 +51,14 @@ class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<Cart>(context);
-    _cartList = [];
+      _cartList = [];
     for (var i in cart.items.values) {
       _cartList.add(i);
       _quantities.add(i.quantity);
       _price.add(i.rate * i.quantity);
+    }
+    for (String i in cart.items.keys) {
+      _uniqueId.add(i);
     }
     return Scaffold(
       appBar: AppBar(
@@ -245,7 +249,12 @@ class _CartScreenState extends State<CartScreen> {
                         Text('₹ ' + item.rate.toString()),
                         IconButton(
                           icon: Icon(Icons.delete),
-                          onPressed: () {},
+                          onPressed: () {
+                            setState(() {
+                              Provider.of<Cart>(context, listen: false)
+                                  .removeItem(_uniqueId[index], item);
+                            });
+                          },
                           color: Colors.red,
                         )
                       ],

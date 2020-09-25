@@ -33,6 +33,7 @@ class _LoginPageState extends State<LoginPage> {
   Future<void> loginUser(String phone, BuildContext context) async {
     FirebaseAuth _auth = FirebaseAuth.instance;
     //bool x = false;
+
     _auth.verifyPhoneNumber(
         phoneNumber: '+91' + phone,
         timeout: Duration(minutes: 2),
@@ -203,65 +204,12 @@ class _LoginPageState extends State<LoginPage> {
                                       TextStyle(color: MyColors.primaryColor)),
                             ]),
                           )),
-                      Container(
-                        height: 40,
-                        constraints: const BoxConstraints(maxWidth: 500),
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 10),
-                        child: CupertinoTextField(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.blue),
-                              color: Colors.white,
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(20))),
-                          controller: nameController,
-                          clearButtonMode: OverlayVisibilityMode.editing,
-                          keyboardType: TextInputType.name,
-                          maxLines: 1,
-                          placeholder: 'Your Name',
-                        ),
-                      ),
-                      Container(
-                        height: 40,
-                        constraints: const BoxConstraints(maxWidth: 500),
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 10),
-                        child: CupertinoTextField(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.blue),
-                            color: Colors.white,
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(20),
-                            ),
-                          ),
-                          controller: emailController,
-                          clearButtonMode: OverlayVisibilityMode.editing,
-                          keyboardType: TextInputType.emailAddress,
-                          maxLines: 1,
-                          placeholder: 'Your Email',
-                        ),
-                      ),
-                      Container(
-                        height: 40,
-                        constraints: const BoxConstraints(maxWidth: 500),
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 10),
-                        child: CupertinoTextField(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.blue),
-                              color: Colors.white,
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(20))),
-                          controller: phoneController,
-                          clearButtonMode: OverlayVisibilityMode.editing,
-                          keyboardType: TextInputType.phone,
-                          maxLines: 1,
-                          placeholder: '+91...',
-                        ),
-                      ),
+                      cupertinoTextField(
+                          nameController, TextInputType.name, "Your Name"),
+                      cupertinoTextField(emailController,
+                          TextInputType.emailAddress, "Your Email"),
+                      cupertinoTextField(
+                          phoneController, TextInputType.phone, "+91 "),
                       Container(
                         margin: const EdgeInsets.symmetric(
                             horizontal: 20, vertical: 10),
@@ -317,6 +265,27 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget cupertinoTextField(TextEditingController controller,
+      TextInputType textInputType, String placeHolder) {
+    return Container(
+      height: 40,
+      constraints: const BoxConstraints(maxWidth: 500),
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      child: CupertinoTextField(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        decoration: BoxDecoration(
+            border: Border.all(color: Colors.blue),
+            color: Colors.white,
+            borderRadius: const BorderRadius.all(Radius.circular(20))),
+        controller: controller,
+        clearButtonMode: OverlayVisibilityMode.editing,
+        keyboardType: textInputType,
+        maxLines: 1,
+        placeholder: placeHolder,
       ),
     );
   }
