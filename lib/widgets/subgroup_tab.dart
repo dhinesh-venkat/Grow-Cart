@@ -4,9 +4,10 @@ import 'package:easy_shop/widgets/loading_animation.dart';
 import 'package:easy_shop/widgets/products_grid.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import '../models/sub_group.dart';
-import '../models/api_response.dart';
 import 'package:hexcolor/hexcolor.dart';
+
+import '../models/api_response.dart';
+import '../models/sub_group.dart';
 
 class SubGroupTab extends StatefulWidget {
   //const SubGroupTop({Key key}) : super(key: key);
