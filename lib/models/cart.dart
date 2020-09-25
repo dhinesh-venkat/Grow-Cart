@@ -21,6 +21,16 @@ class CartItem {
 class Cart with ChangeNotifier {
   Map<String, CartItem> _items = {};
 
+  get productList {
+    List<String> k = this.items.keys.toList();
+    k.sort();
+    return k;
+  }
+
+  get itemList {
+    return this.productList.map((e) => _items[e]).toList();
+  }
+
   Map<String, CartItem> get items {
     return {..._items};
   }

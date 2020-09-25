@@ -7,6 +7,7 @@ import 'package:easy_shop/services/location_serviced.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+
 import '../models/cart.dart';
 
 class CartScreen extends StatefulWidget {
@@ -18,48 +19,22 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  List<int> _quantities = [];
-  List<double> _price = [];
-  List<CartItem> _cartList = [];
-  List<String> _uniqueId = [];
-  double _totalAmount = 0.0;
+  // List<int> _quantities = [];
+  // List<double> _price = [];
+  // List<CartItem> _cartList = [];
+  // List<String> _uniqueId = [];
+  // double _totalAmount = 0.0;
   bool loading = false;
   @override
   void initState() {
-    _totalAmount = Provider.of<Cart>(context, listen: false).totalAmount;
+    // _totalAmount = Provider.of<Cart>(context, listen: false).totalAmount;
     super.initState();
-  }
-
-  void add(value) {
-    setState(() {
-      _quantities[value]++;
-      _price[value] += _cartList[value].rate;
-      _totalAmount += _cartList[value].rate;
-    });
-  }
-
-  void sub(value) {
-    setState(() {
-      if (_quantities[value] > 1) {
-        _quantities[value]--;
-        _price[value] -= _cartList[value].rate;
-        _totalAmount -= _cartList[value].rate;
-      }
-    });
   }
 
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<Cart>(context);
-      _cartList = [];
-    for (var i in cart.items.values) {
-      _cartList.add(i);
-      _quantities.add(i.quantity);
-      _price.add(i.rate * i.quantity);
-    }
-    for (String i in cart.items.keys) {
-      _uniqueId.add(i);
-    }
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -69,9 +44,6 @@ class _CartScreenState extends State<CartScreen> {
           FlatButton(
               onPressed: () {
                 cart.clear();
-                setState(() {
-                  _totalAmount = 0.0;
-                });
               },
               child: Text(
                 'Clear',
@@ -109,7 +81,7 @@ class _CartScreenState extends State<CartScreen> {
                         onPressed: () {},
                         child: FittedBox(
                           fit: BoxFit.cover,
-                          child: Text('₹ ' + _totalAmount.toString(),
+                          child: Text('₹ ' + cart.totalAmount.toString(),
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 25,
@@ -124,9 +96,21 @@ class _CartScreenState extends State<CartScreen> {
             ),
             Expanded(
               child: ListView.builder(
-                itemBuilder: (context, index) =>
-                    getItem(_cartList[index], index),
-                itemCount: _cartList.length,
+                itemBuilder: (context, index) => CartListItem(
+                  product: cart.productList[index],
+                  item: cart.itemList[index],
+                  addItemCallback: (p, i) => cart.addItem(
+                    p,
+                    i.rate,
+                    i.itemName,
+                    i.imageUrl,
+                    i.total,
+                    i.quantity,
+                  ),
+                  subItemCallback: (p, i) => cart.removeSingleItem(p),
+                  removeItemCallback: (p, i) => cart.removeItem(p, i),
+                ),
+                itemCount: cart.items.length,
               ),
             ),
             Container(
@@ -134,7 +118,7 @@ class _CartScreenState extends State<CartScreen> {
               constraints: const BoxConstraints(maxWidth: 500),
               child: RaisedButton(
                 onPressed: () {
-                  if (_cartList.length > 0) {
+                  if (cart.items.length > 0) {
                     setState(() {
                       loading = true;
                     });
@@ -192,8 +176,26 @@ class _CartScreenState extends State<CartScreen> {
       ),
     );
   }
+}
 
-  Widget getItem(CartItem item, int index) {
+class CartListItem extends StatelessWidget {
+  final CartItem item;
+  final String product;
+  final Function(String, CartItem) addItemCallback;
+  final Function(String, CartItem) subItemCallback;
+  final Function(String, CartItem) removeItemCallback;
+
+  const CartListItem(
+      {Key key,
+      this.item,
+      this.product,
+      this.addItemCallback,
+      this.removeItemCallback,
+      this.subItemCallback})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
         Container(
@@ -227,7 +229,7 @@ class _CartScreenState extends State<CartScreen> {
                       ),
                     ),
                     Text(
-                      '₹ ${_price[index]}',
+                      '₹ ${item.rate * item.quantity}',
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 24,
@@ -249,12 +251,10 @@ class _CartScreenState extends State<CartScreen> {
                         Text('₹ ' + item.rate.toString()),
                         IconButton(
                           icon: Icon(Icons.delete),
-                          onPressed: () {
-                            setState(() {
-                              Provider.of<Cart>(context, listen: false)
-                                  .removeItem(_uniqueId[index], item);
-                            });
-                          },
+                          onPressed: () => removeItemCallback(
+                            product,
+                            item,
+                          ),
                           color: Colors.red,
                         )
                       ],
@@ -276,22 +276,29 @@ class _CartScreenState extends State<CartScreen> {
                             ),
                             onPressed: () {
                               HapticFeedback.lightImpact();
-                              sub(index);
+                              subItemCallback(
+                                product,
+                                item,
+                              );
                             }),
                         Text(
-                          _quantities[index].toString(),
+                          item.quantity.toString(),
                           style: TextStyle(fontSize: 15),
                         ),
                         IconButton(
-                            icon: Icon(
-                              Icons.add,
-                              size: 30,
-                              color: Colors.white,
-                            ),
-                            onPressed: () {
-                              HapticFeedback.lightImpact();
-                              add(index);
-                            }),
+                          icon: Icon(
+                            Icons.add,
+                            size: 30,
+                            color: Colors.white,
+                          ),
+                          onPressed: () {
+                            HapticFeedback.lightImpact();
+                            addItemCallback(
+                              product,
+                              item,
+                            );
+                          },
+                        ),
                       ],
                     ),
                   ),
