@@ -10,7 +10,7 @@ class GroupService {
   String url = MyApp.BASE_URL;
 
   Future<APIResponse<List<Group>>> getGroupList() {
-    return http.get(url + '/api/group').then((data) {
+    return http.get(url + '/api/group?&pagenumber=0&pagesize=20').then((data) {
       print('Status code : ${data.statusCode}');
       if (data.statusCode == 200) {
         final Iterable jsonData = json.decode(data.body);
