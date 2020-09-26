@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:relative_scale/relative_scale.dart';
 import '../screens/cart_screen.dart';
+import '../widgets/app_drawer.dart';
 
 class HomePage extends StatelessWidget {
   //const HomePage({Key key}) : super(key: key);
@@ -33,6 +34,7 @@ class HomePage extends StatelessWidget {
     return RelativeBuilder(
       builder: (context, screenHeight, screenWidth, sy, sx) {
         return Scaffold(
+          drawer: AppDrawer(),
           backgroundColor: Theme.of(context).primaryColor,
           appBar: AppBar(
             elevation: 0.0,
