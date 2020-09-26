@@ -1,8 +1,10 @@
+import 'dart:convert';
+
 import 'package:easy_shop/main.dart';
 import 'package:http/http.dart' as http;
+
 import '../models/api_response.dart';
 import '../models/product.dart';
-import 'dart:convert';
 
 class ProductService {
   String url = MyApp.BASE_URL;
@@ -10,11 +12,7 @@ class ProductService {
   Future<APIResponse<List<Product>>> getProductList(
       String groupId, String subGroupId) {
     return http
-        .get(url +
-            "/api/item?&pagenumber=1&pagesize=20&groupid=" +
-            groupId +
-            "&subgroupid=" +
-            subGroupId)
+        .get(url + "/api/item?groupid=" + groupId + "&subgroupid=" + subGroupId)
         .then((data) {
       if (data.statusCode == 200) {
         final jsonData = json.decode(data.body);

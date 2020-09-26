@@ -1,15 +1,16 @@
+import 'dart:convert';
+
 import 'package:easy_shop/main.dart';
+import 'package:http/http.dart' as http;
 
 import '../models/api_response.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 import '../models/sub_group.dart';
 
 class SubGroupService {
   String url = MyApp.BASE_URL;
 
   Future<APIResponse<List<SubGroup>>> getSubGroupList(String groupID) {
-    return http.get(url + '/api/subgroup?&groupid=' + groupID).then((data) {
+    return http.get(url + '/api/subgroup?groupid=' + groupID).then((data) {
       if (data.statusCode == 200) {
         final jsonData = json.decode(data.body);
         final subGroups = <SubGroup>[];

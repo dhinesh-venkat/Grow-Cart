@@ -64,7 +64,7 @@ class _ProductsGridState extends State<ProductsGrid> {
     _apiResponse =
         await service.getProductList(widget.groupId, widget.subGroupId);
     for (int i = 0; i < _apiResponse.data.length; i++) {
-      _selectedPackage.add(_apiResponse.data[i].data[0].packingQty);
+      _selectedPackage.add(_apiResponse.data[i].data[0].code);
       _favorites.add(false);
       _isAdded.add(false);
       _prices.add({
@@ -202,10 +202,7 @@ class _ProductsGridState extends State<ProductsGrid> {
                         Flexible(
                           flex: 1,
                           child: getDropDownForPacking(
-                              _apiResponse.data[item].data
-                                  .map((e) => e.packingQty)
-                                  .toList(),
-                              item),
+                              _apiResponse.data[item].data, item),
                         ),
                         Consumer<Cart>(
                           builder: (
@@ -272,8 +269,11 @@ class _ProductsGridState extends State<ProductsGrid> {
                                                           .data[item].itemName +
                                                       'sub',
                                                   backgroundColor: Colors.white,
-                                                  onPressed: () => cart.removeSingleItem(_apiResponse
-                                                      .data[item].itemId),
+                                                  onPressed: () =>
+                                                      cart.removeSingleItem(
+                                                          _apiResponse
+                                                              .data[item]
+                                                              .itemId),
                                                   child: Icon(Icons.remove,
                                                       size: 12)),
                                             )
@@ -346,7 +346,7 @@ class _ProductsGridState extends State<ProductsGrid> {
     );
   }
 
-  Widget getDropDownForPacking(List<String> list, int index) {
+  Widget getDropDownForPacking(List<Data> list, int index) {
     return DropdownButtonHideUnderline(
         child: DropdownButton(
       style: TextStyle(color: Colors.white),
@@ -355,8 +355,8 @@ class _ProductsGridState extends State<ProductsGrid> {
       value: _selectedPackage[index],
       items: list.map((item) {
         return DropdownMenuItem<String>(
-          child: Text(item),
-          value: item,
+          child: Text(item.packingQty),
+          value: item.code,
         );
       }).toList(),
       onChanged: (value) => onSelectedPackage(value, index),
