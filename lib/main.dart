@@ -2,6 +2,7 @@
 import 'package:easy_shop/PhLogin/phlogin.dart';
 import 'package:easy_shop/screens/cart_screen.dart';
 import 'package:easy_shop/screens/myapp_login.dart';
+import 'package:easy_shop/screens/splash_screen.dart';
 import 'package:easy_shop/services/location_serviced.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -60,8 +61,9 @@ class MyApp extends StatelessWidget {
             bodyText2: TextStyle(
                 fontSize: 14.0, fontFamily: 'Fryo', color: Colors.white),
           )),
-      home: HomePage(),
+      home: Splash(),
       routes: {
+        HomePage.routeName: (_) => HomePage(),
         CartScreen.routeName: (_) => CartScreen(),
       },
     );

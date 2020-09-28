@@ -7,6 +7,7 @@ import '../widgets/app_drawer.dart';
 
 class HomePage extends StatelessWidget {
   //const HomePage({Key key}) : super(key: key);
+  static const routeName = "/homeScreen";
 
   static final List<String> imgList = [
     "https://cdn.pixabay.com/photo/2017/11/02/09/04/drink-2910441_960_720.jpg",
