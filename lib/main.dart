@@ -1,5 +1,6 @@
 // import 'package:device_preview/device_preview.dart';
 import 'package:easy_shop/PhLogin/phlogin.dart';
+import 'package:easy_shop/database/growcartdb.dart';
 import 'package:easy_shop/screens/cart_screen.dart';
 import 'package:easy_shop/screens/myapp_login.dart';
 import 'package:easy_shop/screens/splash_screen.dart';
@@ -9,16 +10,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
-import './screens/homepage.dart';
-import './services/group_service.dart';
-import './services/sub_group_service.dart';
-import './services/product_service.dart';
+
 import './models/cart.dart';
+import './screens/homepage.dart';
 
 void setupLocator() {
-  GetIt.I.registerLazySingleton(() => GroupService());
-  GetIt.I.registerLazySingleton(() => SubGroupService());
-  GetIt.I.registerLazySingleton(() => ProductService());
+  GetIt.I.registerSingleton(() async => StoreFront.build());
 }
 
 void main() async {

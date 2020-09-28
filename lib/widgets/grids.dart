@@ -1,12 +1,12 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_shop/database/growcartdb.dart';
 import 'package:easy_shop/models/api_response.dart';
-import 'package:easy_shop/models/group.dart';
-import 'package:easy_shop/services/group_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get_it/get_it.dart';
-import '../screens/sub_groups.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:relative_scale/relative_scale.dart';
+
+import '../screens/sub_groups.dart';
 
 class Grids extends StatefulWidget {
   //const Grids({Key key}) : super(key: key);
@@ -16,10 +16,7 @@ class Grids extends StatefulWidget {
 }
 
 class _GridsState extends State<Grids> {
-  GroupService get service => GetIt.I<GroupService>();
-
-  APIResponse<List<Group>> _apiResponse;
-  bool _isLoading = false;
+  StoreFront get storefront => GetIt.I<StoreFront>();
 
   @override
   void initState() {

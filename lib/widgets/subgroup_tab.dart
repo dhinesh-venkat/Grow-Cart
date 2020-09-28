@@ -1,5 +1,4 @@
 import 'package:easy_shop/models/sub_group.dart';
-import 'package:easy_shop/services/sub_group_service.dart';
 import 'package:easy_shop/widgets/loading_animation.dart';
 import 'package:easy_shop/widgets/products_grid.dart';
 import 'package:flutter/material.dart';

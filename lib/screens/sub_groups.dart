@@ -1,6 +1,5 @@
 import 'package:easy_shop/models/api_response.dart';
 import 'package:easy_shop/models/group.dart';
-import 'package:easy_shop/services/group_service.dart';
 import 'package:easy_shop/widgets/loading_animation.dart';
 import 'package:easy_shop/widgets/subgroup_tab.dart';
 import 'package:flutter/material.dart';
