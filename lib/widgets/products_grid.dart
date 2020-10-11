@@ -88,14 +88,10 @@ class _ProductsGridState extends State<ProductsGrid> {
       }
     }
     setState(() {
-      //  print("mrp before : ${_selectedPrices[index]['mrp']}");
-      //  print("sr before : ${_selectedPrices[index]['sr']}");
       _selectedPackage[index] = value;
       _selectedPrices[index]['mrp'] = _prices[index]['mrp'][_temp];
       _selectedPrices[index]['sr'] = _prices[index]['sr'][_temp];
       _isAdded[index] = false;
-      //  print("mrp after : ${_selectedPrices[index]['mrp']}");
-      //  print("sr after : ${_selectedPrices[index]['sr']}");
     });
   }
 
