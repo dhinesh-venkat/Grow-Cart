@@ -33,11 +33,27 @@ class Product {
       });
     }
   }
+
+  // Map<String, dynamic> toJson() {
+  //   final Map<String, dynamic> data = new Map<String, dynamic>();
+  //   data['ItemId'] = this.itemId;
+  //   data['ItemName'] = this.itemName;
+  //   data['HSN'] = this.hSN;
+  //   data['GroupName'] = this.groupName;
+  //   data['GroupId'] = this.groupId;
+  //   data['SubGroupId'] = this.subGroupId;
+  //   data['ImageName'] = this.imageName;
+  //   if (this.data != null) {
+  //     data['data'] = this.data.map((v) => v.toJson()).toList();
+  //   }
+  //   return data;
+  // }
 }
 
 class Data {
   String packingQty;
   String uOM;
+  String qtyLbl;
   String uOMId;
   String sellingRate;
   String costRate;
@@ -47,6 +63,7 @@ class Data {
   Data(
       {this.packingQty,
       this.uOM,
+      this.qtyLbl,
       this.uOMId,
       this.sellingRate,
       this.costRate,
@@ -56,10 +73,24 @@ class Data {
   Data.fromJson(Map<String, dynamic> json) {
     packingQty = json['PackingQty'];
     uOM = json['UOM'];
+    qtyLbl = json['QtyLbl'];
     uOMId = json['UOMId'];
     sellingRate = json['SellingRate'];
     costRate = json['CostRate'];
     mRP = json['MRP'];
     code = json['Code'];
   }
+
+  // Map<String, dynamic> toJson() {
+  //   final Map<String, dynamic> data = new Map<String, dynamic>();
+  //   data['PackingQty'] = this.packingQty;
+  //   data['UOM'] = this.uOM;
+  //   data['QtyLbl'] = this.qtyLbl;
+  //   data['UOMId'] = this.uOMId;
+  //   data['SellingRate'] = this.sellingRate;
+  //   data['CostRate'] = this.costRate;
+  //   data['MRP'] = this.mRP;
+  //   data['Code'] = this.code;
+  //   return data;
+  // }
 }

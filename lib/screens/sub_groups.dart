@@ -80,7 +80,9 @@ class _SubGroupScreenState extends State<SubGroupScreen> {
       builder: (context) {
         if (_isLoading) {
           // return Center(child: CircularProgressIndicator());
-          return loadingAnimation();
+          return Scaffold(
+            backgroundColor: Theme.of(context).primaryColor,
+            body: loadingAnimation());
         }
         if (_apiResponse.error) {
           return Center(child: Text(_apiResponse.errorMessage));
