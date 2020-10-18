@@ -12,7 +12,7 @@ class ProductService {
   Future<APIResponse<List<Product>>> getProductList(
       String groupId, String subGroupId) {
     return http
-        .get(url + "/api/item?groupid=" + groupId + "&subgroupid=" + subGroupId)
+        .get(url + "/api/item?groupid=" + groupId + "&subgroupid=" + subGroupId + "&Records=ALL")
         .then((data) {
       if (data.statusCode == 200) {
         final jsonData = json.decode(data.body);
