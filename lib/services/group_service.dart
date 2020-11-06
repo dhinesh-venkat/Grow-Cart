@@ -5,9 +5,10 @@ import 'package:http/http.dart' as http;
 
 import '../models/api_response.dart';
 import '../models/group.dart';
+import 'package:dio/dio.dart';
 
 class GroupService {
-  String url = MyApp.BASE_URL;
+  String url = MyApp.BASE_URL + "api/group?&pagenumber=0&pagesize=20";
 
   Future<APIResponse<List<Group>>> getGroupList() {
     return http.get(url + '/api/group?&pagenumber=0&pagesize=20').then((data) {
@@ -21,7 +22,9 @@ class GroupService {
       }
       return APIResponse<List<Group>>(
           error: true, errorMessage: 'An error occured');
-    }).catchError((_) => APIResponse<List<Group>>(
-        error: true, errorMessage: 'An error occured'));
+    }).catchError((e) {
+      print("Error is thrown : "+e.toString());
+      return APIResponse<List<Group>>(error: true, errorMessage: 'An error occured');
+    });
   }
 }

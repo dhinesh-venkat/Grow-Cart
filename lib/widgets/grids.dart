@@ -31,13 +31,14 @@ class _GridsState extends State<Grids> {
     setState(() {
       _isLoading = true;
     });
+    print("Going to fetch");
     _apiResponse = await service.getGroupList();
-
+    print(_apiResponse.data);
     setState(() {
       _isLoading = false;
     });
   }
-
+                
   @override
   Widget build(BuildContext context) {
     final deviceWidth = MediaQuery.of(context).size.width;
@@ -71,7 +72,7 @@ class _GridsState extends State<Grids> {
                 width: 180,
                 margin: EdgeInsets.all(1),
                 child: Stack(
-                //  clipBehavior: Clip.none,
+                  //  clipBehavior: Clip.none,
                   overflow: Overflow.visible,
                   children: <Widget>[
                     Container(
