@@ -1,9 +1,9 @@
 import 'package:easy_shop/widgets/grids.dart';
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:relative_scale/relative_scale.dart';
 import '../screens/cart_screen.dart';
 import '../widgets/app_drawer.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
 
 class HomePage extends StatelessWidget {
   //const HomePage({Key key}) : super(key: key);
@@ -62,17 +62,22 @@ class HomePage extends StatelessWidget {
             children: <Widget>[
               SizedBox(
                 child: Container(
-                  height: sy(150),
+                  height: sy(140),
                   width: double.infinity,
                   margin:
                       EdgeInsets.only(left: sx(5), right: sx(5), top: sx(5)),
-                  child: CarouselSlider(
-                    items: imageSliders,
-                    options: CarouselOptions(
-                      autoPlay: true,
-                      aspectRatio: 2.0,
-                      enlargeCenterPage: true,
-                    ),
+                  child: Swiper(
+                    viewportFraction: 0.8,
+                    scale: 0.9,
+                    autoplay: true,
+                    loop: true,
+                    itemCount: imgList.length,
+                    itemBuilder: (context, index) {
+                      return Image.network(
+                        imgList[index],
+                        fit: BoxFit.cover,
+                      );
+                    },
                   ),
                 ),
               ),
