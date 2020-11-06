@@ -12,7 +12,12 @@ class ProductService {
   Future<APIResponse<List<Product>>> getProductList(
       String groupId, String subGroupId) {
     return http
-        .get(url + "/api/item?groupid=" + groupId + "&subgroupid=" + subGroupId + "&Records=ALL")
+        .get(url +
+            "/api/item?groupid=" +
+            groupId +
+            "&subgroupid=" +
+            subGroupId +
+            "&Records=ALL")
         .then((data) {
       if (data.statusCode == 200) {
         final jsonData = json.decode(data.body);
@@ -25,7 +30,10 @@ class ProductService {
 
       return APIResponse<List<Product>>(
           error: true, errorMessage: "An error occured");
-    }).catchError((_) => APIResponse<List<Product>>(
-            error: true, errorMessage: "An error occured"));
+    }).catchError((e) {
+      print("Error is thrown : " + e.toString());
+      return APIResponse<List<Product>>(
+          error: true, errorMessage: 'An error occured');
+    });
   }
 }

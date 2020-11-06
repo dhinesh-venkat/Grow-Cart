@@ -26,7 +26,10 @@ class SubGroupService {
       }
       return APIResponse<List<SubGroup>>(
           error: true, errorMessage: 'An error occured');
-    }).catchError((_) => APIResponse<List<SubGroup>>(
-        error: true, errorMessage: 'An error occured'));
+    }).catchError((e) {
+      print("Error is thrown : " + e.toString());
+      return APIResponse<List<SubGroup>>(
+          error: true, errorMessage: 'An error occured');
+    });
   }
 }
