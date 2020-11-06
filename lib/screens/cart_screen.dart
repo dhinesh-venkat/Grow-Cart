@@ -138,7 +138,7 @@ class _CartScreenState extends State<CartScreen> {
                       );
                     }
                   },
-                  color: MyColors.accentColor,
+                  color: Colors.white,
                   shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(14))),
                   child: Container(
