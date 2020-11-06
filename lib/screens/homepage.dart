@@ -17,19 +17,6 @@ class HomePage extends StatelessWidget {
     "https://cdn.pixabay.com/photo/2016/07/05/17/42/candy-1499082_960_720.jpg",
   ];
 
-  final List<Widget> imageSliders = imgList
-      .map((item) => Container(
-            child: Container(
-              margin: EdgeInsets.all(5.0),
-              child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                child: Image.network(item,
-                    fit: BoxFit.cover, width: double.infinity),
-              ),
-            ),
-          ))
-      .toList();
-
   @override
   Widget build(BuildContext context) {
     return RelativeBuilder(
@@ -73,9 +60,12 @@ class HomePage extends StatelessWidget {
                     loop: true,
                     itemCount: imgList.length,
                     itemBuilder: (context, index) {
-                      return Image.network(
-                        imgList[index],
-                        fit: BoxFit.cover,
+                      return ClipRRect(
+                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                        child: Image.network(
+                          imgList[index],
+                          fit: BoxFit.cover,
+                        ),
                       );
                     },
                   ),

@@ -71,6 +71,7 @@ class _GridsState extends State<Grids> {
                 width: 180,
                 margin: EdgeInsets.all(1),
                 child: Stack(
+                //  clipBehavior: Clip.none,
                   overflow: Overflow.visible,
                   children: <Widget>[
                     Container(

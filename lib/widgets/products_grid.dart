@@ -109,6 +109,7 @@ class _ProductsGridState extends State<ProductsGrid> {
     if (width > 900) {
       return 5;
     }
+    return null;
   }
 
   @override
