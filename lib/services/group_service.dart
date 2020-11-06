@@ -5,7 +5,6 @@ import 'package:http/http.dart' as http;
 
 import '../models/api_response.dart';
 import '../models/group.dart';
-import 'package:dio/dio.dart';
 
 class GroupService {
   String url = MyApp.BASE_URL + "api/group?&pagenumber=0&pagesize=20";

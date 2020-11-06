@@ -21,20 +21,18 @@ void setupLocator() {
   GetIt.I.registerLazySingleton(() => ProductService());
 }
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+void main() {
   setupLocator();
-  LocationService();
-  UserRepository userRepository = UserRepository();
-  runApp(BlocProvider(
-    create: (context) =>
-        AuthenticationBloc(userRepository: userRepository)..add(AppStarted()),
-    child: ChangeNotifierProvider(
-      create: (context) => Cart(),
-      child: MyAppLogin(userRepository: userRepository),
-    ),
-  ));
+  runApp(
+  //     DevicePreview(builder: (context) => ChangeNotifierProvider(
+  //   create: (context) => Cart(),
+  //   child: MyApp(),
+  // ),)
+      ChangeNotifierProvider(
+    create: (context) => Cart(),
+    child: MyApp(),
+  )
+  );
 }
 
 class MyApp extends StatelessWidget {
