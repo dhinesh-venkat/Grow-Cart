@@ -1,13 +1,13 @@
 import 'dart:convert';
 
-import 'package:easy_shop/main.dart';
+import 'package:easy_shop/app.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/api_response.dart';
 import '../models/product.dart';
 
 class ProductService {
-  String url = MyApp.BASE_URL;
+  String url = App.BASE_URL;
 
   Future<APIResponse<List<Product>>> getProductList(
       String groupId, String subGroupId) {

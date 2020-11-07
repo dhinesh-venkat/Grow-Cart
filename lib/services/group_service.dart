@@ -1,13 +1,13 @@
 import 'dart:convert';
 
-import 'package:easy_shop/main.dart';
+import 'package:easy_shop/app.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/api_response.dart';
 import '../models/group.dart';
 
 class GroupService {
-  String url = MyApp.BASE_URL + "api/group?&pagenumber=0&pagesize=20";
+  String url = App.BASE_URL + "api/group?&pagenumber=0&pagesize=20";
 
   Future<APIResponse<List<Group>>> getGroupList() {
     return http.get(url + '/api/group?&pagenumber=0&pagesize=20').then((data) {
