@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:easy_shop/login/login.dart';
-import 'package:easy_shop/sign_up/sign_up.dart';
+import 'package:easy_shop/Authentication/login/login.dart';
+import 'package:easy_shop/Authentication/sign_up/sign_up.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:formz/formz.dart';
 

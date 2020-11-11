@@ -1,7 +1,7 @@
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:easy_shop/authentication/authentication.dart';
+import 'package:easy_shop/Authentication/authentication/authentication.dart';
 import 'package:formz/formz.dart';
 
 part 'login_state.dart';

@@ -3,9 +3,9 @@ import 'package:easy_shop/screens/cart_screen.dart';
 import 'package:easy_shop/screens/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import './authentication/authentication.dart';
-import './login/login.dart';
-import './splash/splash.dart';
+import './Authentication/authentication/authentication.dart';
+import './Authentication/login/login.dart';
+import './Authentication/splash/splash.dart';
 import './theme.dart';
 
 class App extends StatelessWidget {
