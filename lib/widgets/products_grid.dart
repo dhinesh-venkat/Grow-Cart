@@ -39,8 +39,8 @@ class _ProductsGridState extends State<ProductsGrid> {
   int _crossAxisCount = 0;
 
   TextStyle itemNameText = const TextStyle(
-      color: Colors.cyan,
-      fontSize: 14,
+      color: Colors.white,
+      fontSize: 16,
       fontWeight: FontWeight.w600,
       fontFamily: 'Poppins');
 
@@ -145,7 +145,7 @@ class _ProductsGridState extends State<ProductsGrid> {
                         width: sy(110),
                         decoration: BoxDecoration(
                             color: Colors.white,
-                            borderRadius: BorderRadius.circular(15),
+                          //  borderRadius: BorderRadius.circular(15),
                             boxShadow: [
                               BoxShadow(
                                   color: Colors.blueGrey.withOpacity(0.2),
@@ -184,7 +184,7 @@ class _ProductsGridState extends State<ProductsGrid> {
                               '₹ ' + _selectedPrices[item]['mrp'],
                               style: TextStyle(
                                   decoration: TextDecoration.lineThrough,
-                                  color: Colors.yellow),
+                                  color: Colors.orangeAccent),
                             ),
                           ),
                           Flexible(
