@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_shop/models/cart.dart';
+import 'package:easy_shop/screens/address_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -108,6 +109,22 @@ class _CartScreenState extends State<CartScreen> {
                   itemCount: cart.items.length,
                 ),
               ),
+              Container(
+                padding: const EdgeInsets.all(19.0),
+                height: 80,
+                width: double.infinity,
+                child: RaisedButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12)),
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(AddressScreen.routeName);
+                  },
+                  child: Text("Order now",
+                      style: TextStyle(color: Colors.white, fontSize: 18.5)),
+                  color: Colors.black,
+                  splashColor: Colors.lightBlue,
+                ),
+              )
               // Container(
               //   margin:
               //       const EdgeInsets.symmetric(horizontal: 20, vertical: 10),

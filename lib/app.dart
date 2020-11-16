@@ -1,4 +1,5 @@
 import 'package:authentication_repository/authentication_repository.dart';
+import 'package:easy_shop/screens/address_screen.dart';
 import 'package:easy_shop/screens/cart_screen.dart';
 import 'package:easy_shop/screens/homepage.dart';
 import 'package:flutter/material.dart';
@@ -76,6 +77,7 @@ class _AppViewState extends State<AppView> {
       routes: {
         HomePage.routeName: (_) => HomePage(),
         CartScreen.routeName: (_) => CartScreen(),
+        AddressScreen.routeName: (_) => AddressScreen(),
       },
     );
   }

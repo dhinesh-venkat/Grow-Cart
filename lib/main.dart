@@ -36,36 +36,3 @@ void main() async {
           create: (context) => Cart(),
           child: App(authenticationRepository: AuthenticationRepository())));
 }
-
-// class MyApp extends StatelessWidget {
-//   const MyApp({Key key}) : super(key: key);
-
-//   static const BASE_URL = "http://sksapi.suninfotechnologies.in/";
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       debugShowCheckedModeBanner: false,
-//       title: "Easy Shop",
-//       theme: ThemeData(
-//           primaryColor: Color.fromRGBO(66, 67, 69, 1),
-//           accentColor: Colors.orange,
-//           fontFamily: 'Poppins',
-//           textTheme: TextTheme(
-//             headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
-//             headline3: TextStyle(
-//                 fontSize: 36.0,
-//                 fontWeight: FontWeight.bold,
-//                 color: Colors.white),
-//             headline4: TextStyle(fontSize: 24, color: Colors.white),
-//             bodyText2: TextStyle(
-//                 fontSize: 14.0, fontFamily: 'Fryo', color: Colors.white),
-//           )),
-//       home: Splash(),
-//       routes: {
-//         HomePage.routeName: (_) => HomePage(),
-//         CartScreen.routeName: (_) => CartScreen(),
-//       },
-//     );
-//   }
-// }
