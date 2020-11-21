@@ -1,5 +1,8 @@
+import 'package:easy_shop/payment/payment_gateway.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/get.dart';
 
 class AddressScreen extends StatelessWidget {
   // const AddressScreen({Key key}) : super(key: key);
@@ -69,24 +72,30 @@ class AddressScreen extends StatelessWidget {
                     "Town/City", TextInputType.text, townController),
               ],
             ),
-            Container(
-              padding: const EdgeInsets.only(bottom: 19.0),
-              height: 65,
-              width: double.infinity,
-              child: RaisedButton(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12)),
-                onPressed: () {
-                  // post the address in firebase
-                  // Navigate to payment
-                  
-                },
-                child: Text("Pay now",
-                    style: TextStyle(color: Colors.white, fontSize: 18.5)),
-                color: Colors.black,
-                splashColor: Colors.lightBlue,
-              ),
-            )
+            GetBuilder<PaymentGateway>(
+                init: PaymentGateway(),
+                builder: (value) {
+                  return Container(
+                    padding: const EdgeInsets.only(bottom: 19.0),
+                    height: 65,
+                    width: double.infinity,
+                    child: RaisedButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12)),
+                      onPressed: () {
+                        // post the address in firebase
+                        // Navigate to payment
+                        value.dispatchpayment(200, "Dhinesh", 6379960868,
+                            "dummy@gmail.com", 'GooglePay');
+                      },
+                      child: Text("Pay now",
+                          style:
+                              TextStyle(color: Colors.white, fontSize: 18.5)),
+                      color: Colors.black,
+                      splashColor: Colors.lightBlue,
+                    ),
+                  );
+                })
           ],
         ),
       ),

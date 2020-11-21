@@ -46,6 +46,7 @@ dependencies:
   formz: ^0.2.0
   geocoder: ^0.2.1
   geolocator: ^5.2.0
+  get: ^3.17.1
   get_it: ^4.0.4
   google_fonts: ^1.1.0
   google_map_location_picker: ^3.3.4
@@ -63,6 +64,12 @@ dependencies:
   relative_scale: ^1.1.0
   shared_preferences: ^0.5.10
   splashscreen: ^1.2.0
+  flutter_launcher_icons: "^0.8.0"
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/logo.png"
 
 dev_dependencies:
   flutter_test:
