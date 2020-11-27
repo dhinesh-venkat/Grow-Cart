@@ -4,6 +4,7 @@ import 'package:relative_scale/relative_scale.dart';
 import '../screens/cart_screen.dart';
 import '../widgets/app_drawer.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:flappy_search_bar/flappy_search_bar.dart';
 
 class HomePage extends StatelessWidget {
   //const HomePage({Key key}) : super(key: key);
@@ -32,6 +33,7 @@ class HomePage extends StatelessWidget {
             elevation: 0.0,
             bottomOpacity: 0.0,
             actions: [
+              //SearchBar(onSearch: null, onItemFound: null),
               IconButton(
                   icon: Icon(Icons.shopping_cart),
                   color: Colors.blue,
