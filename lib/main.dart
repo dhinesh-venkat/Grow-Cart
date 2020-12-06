@@ -1,4 +1,5 @@
 // import 'package:device_preview/device_preview.dart';
+import 'package:easy_shop/services/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +20,7 @@ void setupLocator() {
   GetIt.I.registerLazySingleton(() => GroupService());
   GetIt.I.registerLazySingleton(() => SubGroupService());
   GetIt.I.registerLazySingleton(() => ProductService());
+  GetIt.I.registerLazySingleton(() => UserService());
 }
 
 void main() async {

@@ -32,4 +32,26 @@ class UserService {
       return APIResponse<void>(error: true, errorMessage: "An error occured");
     });
   }
+
+ 
+
+  Future<String> getUserDetails(String deviceId) {
+    return http
+        .get(
+            "http://sksapi.suninfotechnologies.in/api/customermaster?&intOrganizationMasterID=1&strMode=BIND&strDeviceid=" +
+                deviceId)
+        .then((data) {
+      if (data.statusCode == 200) {
+        final jsonData = json.decode(data.body);
+        if (jsonData.isEmpty) {
+          return "Not found";
+        }
+        return jsonData[0]['Customer_Masterid'].toString();
+      }
+      return "Error";
+    }).catchError((e) {
+      print(e.toString());
+      return "Error";
+    });
+  }
 }

@@ -214,7 +214,7 @@ class _ProductsGridState extends State<ProductsGrid> {
                           onPressed: () {
                             HapticFeedback.lightImpact();
                             cart.addItem(
-                                _apiResponse.data[item].itemId +
+                                _apiResponse.data[item].itemId + "/" +
                                     _selectedPackage[item],
                                 double.parse(_selectedPrices[item]['sr']),
                                 _apiResponse.data[item].itemName,

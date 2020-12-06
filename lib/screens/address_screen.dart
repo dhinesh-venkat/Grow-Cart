@@ -1,25 +1,63 @@
+import 'package:easy_shop/models/cart.dart';
+import 'package:easy_shop/models/customer.dart';
 import 'package:easy_shop/payment/payment_gateway.dart';
+import 'package:easy_shop/services/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
+import '../widgets/get_customer_details.dart';
+import 'package:provider/provider.dart';
 
-class AddressScreen extends StatelessWidget {
-  // const AddressScreen({Key key}) : super(key: key);
+class AddressScreen extends StatefulWidget {
   static const routeName = '/address';
 
+  @override
+  _AddressScreenState createState() => _AddressScreenState();
+}
+
+class _AddressScreenState extends State<AddressScreen> {
+  UserService get service => GetIt.I<UserService>();
+  String customerId;
+  bool _isSuccessful = false;
+  final String mail = getUserMail();
+
   TextStyle whiteText = TextStyle(color: Colors.white, fontSize: 18.5);
+
   TextEditingController nameController = TextEditingController();
+
   TextEditingController phoneNumberController = TextEditingController();
+
   TextEditingController pincodeController = TextEditingController();
+
   TextEditingController houseNoController = TextEditingController();
+
   TextEditingController streetController = TextEditingController();
+
   TextEditingController landmarkController = TextEditingController();
+
   TextEditingController townController = TextEditingController();
+
   TextEditingController stateController = TextEditingController();
 
   @override
+  void dispose() {
+    nameController.dispose();
+    phoneNumberController.dispose();
+    pincodeController.dispose();
+    houseNoController.dispose();
+    streetController.dispose();
+    landmarkController.dispose();
+    townController.dispose();
+    stateController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final double netAmount =
+        Provider.of<Cart>(context, listen: false).totalAmount;
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
@@ -82,11 +120,36 @@ class AddressScreen extends StatelessWidget {
                     child: RaisedButton(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12)),
-                      onPressed: () {
-                        // post the address in firebase
-                        // Navigate to payment
-                        value.dispatchpayment(200, "Dhinesh", 6379960868,
-                            "dummy@gmail.com", 'GooglePay');
+                      onPressed: () async {
+                        print("Storing details and Initiating payment gateway");
+                        // Getting the current customer details
+                        String response = await getCustomerDetails(service);
+                        if (response == "Not found") {
+                          // If the current user does not exist in Database, store the detailsl in DB
+                          storeCustomerDetails(nameController.text,
+                              int.parse(phoneNumberController.text), service);
+                          // Getting the customer Id after storing
+                          customerId = await getCustomerDetails(service);
+                          _isSuccessful = true;
+                        } else if (response == "Error") {
+                          // If this block gets executed there is a problem in the database
+                          print("Error on the customer Database");
+                        } else {
+                          // If the user details are already stored, get only the customer ID
+                          customerId = await getCustomerDetails(service);
+                          _isSuccessful = true;
+                        }
+                        if (_isSuccessful) {
+                          // print("Details stored successfully \n ${customerId} ${netAmount} ${nameController.text} ${phoneNumberController.text} ${mail}");
+                          value.dispatchpayment(
+                              netAmount,
+                              nameController.text,
+                              int.parse(phoneNumberController.text),
+                              mail,
+                              'GooglePay');
+                        } else {
+                          print("Something went wrong in the backend");
+                        }
                       },
                       child: Text("Pay now",
                           style:

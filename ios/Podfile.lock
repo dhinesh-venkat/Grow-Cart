@@ -399,6 +399,8 @@ PODS:
     - Flutter
   - path_provider (0.0.1):
     - Flutter
+  - platform_device_id (0.0.1):
+    - Flutter
   - PromisesObjC (1.2.10)
   - razorpay-pod (1.1.10)
   - razorpay_flutter (1.1.5):
@@ -429,6 +431,7 @@ DEPENDENCIES:
   - location_permissions (from `.symlinks/plugins/location_permissions/ios`)
   - package_info (from `.symlinks/plugins/package_info/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
+  - platform_device_id (from `.symlinks/plugins/platform_device_id/ios`)
   - razorpay_flutter (from `.symlinks/plugins/razorpay_flutter/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
@@ -496,6 +499,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/package_info/ios"
   path_provider:
     :path: ".symlinks/plugins/path_provider/ios"
+  platform_device_id:
+    :path: ".symlinks/plugins/platform_device_id/ios"
   razorpay_flutter:
     :path: ".symlinks/plugins/razorpay_flutter/ios"
   shared_preferences:
@@ -544,6 +549,7 @@ SPEC CHECKSUMS:
   nanopb: c43f40fadfe79e8b8db116583945847910cbabc9
   package_info: 873975fc26034f0b863a300ad47e7f1ac6c7ec62
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
+  platform_device_id: 81b3e2993881f87d0c82ef151dc274df4869aef5
   PromisesObjC: b14b1c6b68e306650688599de8a45e49fae81151
   razorpay-pod: ee8dc073c65baee8df6e8c4275b1c989bab614a2
   razorpay_flutter: bf22a7c0e12d9f906b6a493f546ee9afe7f8b508
