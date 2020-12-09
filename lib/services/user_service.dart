@@ -28,7 +28,7 @@ class UserService {
       }
       return APIResponse<void>(error: true, errorMessage: "An error occured");
     }).catchError((e) {
-      print("Error is thrown : " + e.toString());
+      print("Error on UserService : " + e.toString());
       return APIResponse<void>(error: true, errorMessage: "An error occured");
     });
   }

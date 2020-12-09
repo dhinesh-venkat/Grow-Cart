@@ -1,5 +1,6 @@
+import 'package:easy_shop/models/address.dart';
+import 'package:easy_shop/models/api_response.dart';
 import 'package:easy_shop/models/cart.dart';
-import 'package:easy_shop/models/customer.dart';
 import 'package:easy_shop/payment/payment_gateway.dart';
 import 'package:easy_shop/services/user_service.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,8 @@ import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import '../widgets/get_customer_details.dart';
 import 'package:provider/provider.dart';
+import 'package:easy_shop/services/address_service.dart';
+
 
 class AddressScreen extends StatefulWidget {
   static const routeName = '/address';
@@ -18,7 +21,9 @@ class AddressScreen extends StatefulWidget {
 }
 
 class _AddressScreenState extends State<AddressScreen> {
-  UserService get service => GetIt.I<UserService>();
+  UserService get userService => GetIt.I<UserService>();
+  AddressService get addressService => GetIt.I<AddressService>();
+
   String customerId;
   bool _isSuccessful = false;
   final String mail = getUserMail();
@@ -77,9 +82,10 @@ class _AddressScreenState extends State<AddressScreen> {
                   width: double.infinity,
                   height: 45,
                   child: RaisedButton(
-                    onPressed: () {
+                    onPressed: (){
                       // Fetch address from firebase
                       // navigate to new screen and display all the addresses
+                      
                     },
                     child: Text(
                       "Choose an Existing Address",
@@ -123,26 +129,26 @@ class _AddressScreenState extends State<AddressScreen> {
                       onPressed: () async {
                         print("Storing details and Initiating payment gateway");
                         // Getting the current customer details
-                        String response = await getCustomerDetails(service);
-                        if (response == "Not found") {
+                        String _response = await getCustomerDetails(userService);
+                        if (_response == "Not found") {
                           // If the current user does not exist in Database, store the detailsl in DB
                           storeCustomerDetails(nameController.text,
-                              int.parse(phoneNumberController.text), service);
+                              int.parse(phoneNumberController.text), userService);
                           // Getting the customer Id after storing
-                          customerId = await getCustomerDetails(service);
+                          customerId = await getCustomerDetails(userService);
                           _isSuccessful = true;
-                        } else if (response == "Error") {
+                        } else if (_response == "Error") {
                           // If this block gets executed there is a problem in the database
                           print("Error on the customer Database");
                         } else {
                           // If the user details are already stored, get only the customer ID
-                          customerId = await getCustomerDetails(service);
+                          customerId = await getCustomerDetails(userService);
                           _isSuccessful = true;
                         }
                         if (_isSuccessful) {
-                          // print("Details stored successfully \n ${customerId} ${netAmount} ${nameController.text} ${phoneNumberController.text} ${mail}");
+                           print("Details stored successfully \n ${customerId} ${netAmount} ${nameController.text} ${phoneNumberController.text} ${mail}");
                           value.dispatchpayment(
-                              netAmount,
+                              (netAmount * 100).toInt(),
                               nameController.text,
                               int.parse(phoneNumberController.text),
                               mail,

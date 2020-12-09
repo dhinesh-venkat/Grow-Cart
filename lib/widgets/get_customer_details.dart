@@ -1,5 +1,4 @@
 import 'package:easy_shop/models/api_response.dart';
-import 'package:easy_shop/models/customer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:platform_device_id/platform_device_id.dart';

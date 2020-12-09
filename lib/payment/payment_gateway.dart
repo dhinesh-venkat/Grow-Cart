@@ -14,6 +14,12 @@ class PaymentGateway extends GetxController {
     super.onInit();
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+    razorpay.clear();
+  }
+
   void handleError(PaymentFailureResponse paymentFailureResponse) {
     Get.snackbar('Error Occured', paymentFailureResponse.message);
   }
@@ -26,8 +32,8 @@ class PaymentGateway extends GetxController {
     Get.snackbar('External Wallet', externalWalletResponse.walletName);
   }
 
-  void dispatchpayment(
-      double amount, String name, int contact, String email, String wallets) {
+  void dispatchpayment(int amount, String name, int contact, String email,
+      String wallets) async {
     var options = {
       'key': 'rzp_test_7Bbu75jFzeaQaY',
       'amount': amount,
