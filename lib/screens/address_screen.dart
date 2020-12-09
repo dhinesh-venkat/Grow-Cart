@@ -12,7 +12,6 @@ import '../widgets/get_customer_details.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_shop/services/address_service.dart';
 
-
 class AddressScreen extends StatefulWidget {
   static const routeName = '/address';
 
@@ -25,7 +24,9 @@ class _AddressScreenState extends State<AddressScreen> {
   AddressService get addressService => GetIt.I<AddressService>();
 
   String customerId;
-  bool _isSuccessful = false;
+  bool _isGetID = false;
+  bool _isAddressStored = false;
+  APIResponse<List<dynamic>> _addressResponse;
   final String mail = getUserMail();
 
   TextStyle whiteText = TextStyle(color: Colors.white, fontSize: 18.5);
@@ -82,10 +83,9 @@ class _AddressScreenState extends State<AddressScreen> {
                   width: double.infinity,
                   height: 45,
                   child: RaisedButton(
-                    onPressed: (){
+                    onPressed: () {
                       // Fetch address from firebase
                       // navigate to new screen and display all the addresses
-                      
                     },
                     child: Text(
                       "Choose an Existing Address",
@@ -129,24 +129,43 @@ class _AddressScreenState extends State<AddressScreen> {
                       onPressed: () async {
                         print("Storing details and Initiating payment gateway");
                         // Getting the current customer details
-                        String _response = await getCustomerDetails(userService);
-                        if (_response == "Not found") {
+                        String _idResponse =
+                            await getCustomerDetails(userService);
+                        if (_idResponse == "Not found") {
                           // If the current user does not exist in Database, store the detailsl in DB
-                          storeCustomerDetails(nameController.text,
-                              int.parse(phoneNumberController.text), userService);
+                          storeCustomerDetails(
+                              nameController.text,
+                              int.parse(phoneNumberController.text),
+                              userService);
                           // Getting the customer Id after storing
                           customerId = await getCustomerDetails(userService);
-                          _isSuccessful = true;
-                        } else if (_response == "Error") {
+                          _isGetID = true;
+                        } else if (_idResponse == "Error") {
                           // If this block gets executed there is a problem in the database
                           print("Error on the customer Database");
                         } else {
                           // If the user details are already stored, get only the customer ID
                           customerId = await getCustomerDetails(userService);
-                          _isSuccessful = true;
+                          _isGetID = true;
                         }
-                        if (_isSuccessful) {
-                           print("Details stored successfully \n ${customerId} ${netAmount} ${nameController.text} ${phoneNumberController.text} ${mail}");
+                        if (_isGetID) {
+                          _addressResponse = await addressService.storeAddress(
+                              (double.parse(customerId).toInt()).toString(),
+                              houseNoController.text,                                 
+                              streetController.text,
+                              townController.text,
+                              landmarkController.text,
+                              pincodeController.text);
+                          if (_addressResponse.error) {
+                            print("Something went wrong while storing address");
+                          } else {
+                            print(_addressResponse.data);
+                            _isAddressStored = true;
+                          }
+                        } else {
+                          print("Something went wrong in the backend");
+                        }
+                        if (_isAddressStored) {
                           value.dispatchpayment(
                               (netAmount * 100).toInt(),
                               nameController.text,
