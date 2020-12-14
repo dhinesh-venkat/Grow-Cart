@@ -51,10 +51,12 @@ class AddressService {
         print(jsonData);
         return APIResponse<List<dynamic>>(error: false, data: jsonData);
       }
-      return APIResponse<List<dynamic>>(error: true, errorMessage: "An error occured");
+      return APIResponse<List<dynamic>>(
+          error: true, errorMessage: "An error occured");
     }).catchError((e) {
       print("Error on Address Service while storing: " + e.toString());
-      return APIResponse<List<dynamic>>(error: true, errorMessage: "An error occured");
+      return APIResponse<List<dynamic>>(
+          error: true, errorMessage: "An error occured");
     });
   }
 
@@ -66,11 +68,12 @@ class AddressService {
             customerMasterId)
         .then((data) {
       if (data.statusCode == 200) {
-        final jsonData = json.decode(data.body);
-        final List<Address> addresses = jsonData;
+        final Iterable jsonData = json.decode(data.body);
+        final List<Address> addresses =
+            jsonData.map((e) => Address.fromJson(e)).toList();
+        print(addresses);
         return APIResponse<List<Address>>(data: addresses);
       }
-
       return APIResponse<List<Address>>(
           error: true, errorMessage: "An error occured");
     }).catchError((e) {

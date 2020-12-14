@@ -1,6 +1,6 @@
 class Address {
-  int customerAddressId;
-  int customerMasterId;
+  num customerAddressId;
+  num customerMasterId;
   String contactPerson;
   String doorNo;
   String street;

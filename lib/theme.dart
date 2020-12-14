@@ -13,7 +13,7 @@ final theme = ThemeData(
   primaryColorLight: const Color(0xFFB2EBF2),
   primaryColor: Color.fromRGBO(66, 67, 69, 1),
   accentColor: Colors.orange,
-  scaffoldBackgroundColor: const Color(0xFFE0F2F1),
+//  scaffoldBackgroundColor: const Color(0xFFE0F2F1),
   inputDecorationTheme: InputDecorationTheme(
     border: OutlineInputBorder(
       borderRadius: BorderRadius.circular(8),

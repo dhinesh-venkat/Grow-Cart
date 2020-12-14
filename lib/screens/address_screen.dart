@@ -11,6 +11,8 @@ import 'package:get_it/get_it.dart';
 import '../widgets/get_customer_details.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_shop/services/address_service.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import '../widgets/modal_with_navigator.dart';
 
 class AddressScreen extends StatefulWidget {
   static const routeName = '/address';
@@ -27,6 +29,8 @@ class _AddressScreenState extends State<AddressScreen> {
   bool _isGetID = false;
   bool _isAddressStored = false;
   APIResponse<List<dynamic>> _addressResponse;
+  APIResponse<List<Address>> _getAddress;
+
   final String mail = getUserMail();
 
   TextStyle whiteText = TextStyle(color: Colors.white, fontSize: 18.5);
@@ -83,9 +87,27 @@ class _AddressScreenState extends State<AddressScreen> {
                   width: double.infinity,
                   height: 45,
                   child: RaisedButton(
-                    onPressed: () {
-                      // Fetch address from firebase
-                      // navigate to new screen and display all the addresses
+                    onPressed: () async {
+                      customerId = await getCustomerDetails(userService);
+                      if (customerId == "Not found") {
+                        // User have no ID yet
+                      } else {
+                        _getAddress = await addressService.getExistingAddresses(
+                          (double.parse(customerId).toInt()).toString(),
+                        );
+                        if (_getAddress.error) {
+                          print("Error while getting address");
+                        } else {
+                          showCupertinoModalBottomSheet(
+                            expand: true,
+                            context: context,
+                            backgroundColor: Colors.transparent,
+                            builder: (context) => ModalWithNavigator(
+                              addressList: _getAddress.data,
+                            ),
+                          );
+                        }
+                      }
                     },
                     child: Text(
                       "Choose an Existing Address",
@@ -151,7 +173,7 @@ class _AddressScreenState extends State<AddressScreen> {
                         if (_isGetID) {
                           _addressResponse = await addressService.storeAddress(
                               (double.parse(customerId).toInt()).toString(),
-                              houseNoController.text,                                 
+                              houseNoController.text,
                               streetController.text,
                               townController.text,
                               landmarkController.text,
