@@ -2,6 +2,7 @@ import 'package:authentication_repository/authentication_repository.dart';
 import 'package:easy_shop/screens/address_screen.dart';
 import 'package:easy_shop/screens/cart_screen.dart';
 import 'package:easy_shop/screens/homepage.dart';
+import 'package:easy_shop/screens/invoice.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import './Authentication/authentication/authentication.dart';
@@ -78,6 +79,7 @@ class _AppViewState extends State<AppView> {
         HomePage.routeName: (_) => HomePage(),
         CartScreen.routeName: (_) => CartScreen(),
         AddressScreen.routeName: (_) => AddressScreen(),
+        Invoice.routeName: (_) => Invoice(),
       },
     );
   }

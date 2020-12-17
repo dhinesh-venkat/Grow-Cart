@@ -71,7 +71,6 @@ class AddressService {
         final Iterable jsonData = json.decode(data.body);
         final List<Address> addresses =
             jsonData.map((e) => Address.fromJson(e)).toList();
-        print(addresses);
         return APIResponse<List<Address>>(data: addresses);
       }
       return APIResponse<List<Address>>(

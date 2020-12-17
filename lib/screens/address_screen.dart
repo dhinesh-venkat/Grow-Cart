@@ -30,6 +30,7 @@ class _AddressScreenState extends State<AddressScreen> {
   bool _isAddressStored = false;
   APIResponse<List<dynamic>> _addressResponse;
   APIResponse<List<Address>> _getAddress;
+  bool _saveAddress = false;
 
   final String mail = getUserMail();
 
@@ -62,6 +63,62 @@ class _AddressScreenState extends State<AddressScreen> {
     townController.dispose();
     stateController.dispose();
     super.dispose();
+  }
+
+  void fillAddress(Address address) {
+    setState(() {
+      //  nameController.text = ;
+      //  phoneNumberController.text = ;
+      print(address.pincode);
+      pincodeController.text = address.pincode;
+      houseNoController.text = address.doorNo.replaceAll('%', ' ');
+      streetController.text = address.street.replaceAll('%', ' ');
+      landmarkController.text = address.landmark.replaceAll('%', ' ');
+      townController.text = address.city.replaceAll('%', ' ');
+    });
+  }
+
+  void onSaveAddressChanged(bool newValue) {
+    setState(() {
+      _saveAddress = newValue;
+    });
+  }
+
+  void saveAddressInServer() async {
+    // Getting the current customer details
+    String _idResponse = await getCustomerDetails(userService);
+    if (_idResponse == "Not found") {
+      // If the current user does not exist in Database, store the details in DB
+      storeCustomerDetails(nameController.text,
+          int.parse(phoneNumberController.text), userService);
+      // Getting the customer Id after storing
+      customerId = await getCustomerDetails(userService);
+      _isGetID = true;
+    } else if (_idResponse == "Error") {
+      // If this block gets executed there is a problem in the database
+      print("Error on the customer Database");
+    } else {
+      // If the user details are already stored, get only the customer ID
+      customerId = await getCustomerDetails(userService);
+      _isGetID = true;
+    }
+    if (_isGetID) {
+      _addressResponse = await addressService.storeAddress(
+          (double.parse(customerId).toInt()).toString(),
+          houseNoController.text,
+          streetController.text,
+          townController.text,
+          landmarkController.text,
+          pincodeController.text);
+      if (_addressResponse.error) {
+        print("Something went wrong while storing address");
+      } else {
+        //  print(_addressResponse.data);
+        _isAddressStored = true;
+      }
+    } else {
+      print("Something went wrong in the backend");
+    }
   }
 
   @override
@@ -98,7 +155,8 @@ class _AddressScreenState extends State<AddressScreen> {
                         if (_getAddress.error) {
                           print("Error while getting address");
                         } else {
-                          showCupertinoModalBottomSheet(
+                          final Address address =
+                              await showCupertinoModalBottomSheet(
                             expand: true,
                             context: context,
                             backgroundColor: Colors.transparent,
@@ -106,6 +164,8 @@ class _AddressScreenState extends State<AddressScreen> {
                               addressList: _getAddress.data,
                             ),
                           );
+
+                          fillAddress(address);
                         }
                       }
                     },
@@ -136,6 +196,19 @@ class _AddressScreenState extends State<AddressScreen> {
                     landmarkController),
                 getCupertinoTextField(
                     "Town/City", TextInputType.text, townController),
+                SizedBox(height: 15),
+                Row(
+                  children: <Widget>[
+                    Checkbox(
+                      onChanged: onSaveAddressChanged,
+                      value: _saveAddress,
+                    ),
+                    Text(
+                      "Save Address",
+                      style: TextStyle(fontSize: 16),
+                    )
+                  ],
+                )
               ],
             ),
             GetBuilder<PaymentGateway>(
@@ -148,57 +221,19 @@ class _AddressScreenState extends State<AddressScreen> {
                     child: RaisedButton(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12)),
-                      onPressed: () async {
-                        print("Storing details and Initiating payment gateway");
-                        // Getting the current customer details
-                        String _idResponse =
-                            await getCustomerDetails(userService);
-                        if (_idResponse == "Not found") {
-                          // If the current user does not exist in Database, store the detailsl in DB
-                          storeCustomerDetails(
-                              nameController.text,
-                              int.parse(phoneNumberController.text),
-                              userService);
-                          // Getting the customer Id after storing
-                          customerId = await getCustomerDetails(userService);
-                          _isGetID = true;
-                        } else if (_idResponse == "Error") {
-                          // If this block gets executed there is a problem in the database
-                          print("Error on the customer Database");
-                        } else {
-                          // If the user details are already stored, get only the customer ID
-                          customerId = await getCustomerDetails(userService);
-                          _isGetID = true;
+                      onPressed: () {
+                        if (_saveAddress) {
+                          saveAddressInServer();
                         }
-                        if (_isGetID) {
-                          _addressResponse = await addressService.storeAddress(
-                              (double.parse(customerId).toInt()).toString(),
-                              houseNoController.text,
-                              streetController.text,
-                              townController.text,
-                              landmarkController.text,
-                              pincodeController.text);
-                          if (_addressResponse.error) {
-                            print("Something went wrong while storing address");
-                          } else {
-                            print(_addressResponse.data);
-                            _isAddressStored = true;
-                          }
-                        } else {
-                          print("Something went wrong in the backend");
-                        }
-                        if (_isAddressStored) {
-                          value.dispatchpayment(
-                              (netAmount * 100).toInt(),
-                              nameController.text,
-                              int.parse(phoneNumberController.text),
-                              mail,
-                              'GooglePay');
-                        } else {
-                          print("Something went wrong in the backend");
-                        }
+
+                        value.dispatchpayment(
+                            (netAmount * 100).toInt(),
+                            nameController.text,
+                            int.parse(phoneNumberController.text),
+                            mail,
+                            'GooglePay');
                       },
-                      child: Text("Pay now",
+                      child: Text("Continue",
                           style:
                               TextStyle(color: Colors.white, fontSize: 18.5)),
                       color: Colors.black,
