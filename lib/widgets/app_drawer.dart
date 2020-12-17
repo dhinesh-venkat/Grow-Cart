@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../Authentication/authentication/authentication.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({Key key}) : super(key: key);
@@ -50,7 +51,7 @@ class AppDrawer extends StatelessWidget {
   void showAlertDialog(BuildContext context) {
     showDialog(
         context: context,
-        child: CupertinoAlertDialog( 
+        child: CupertinoAlertDialog(
           title: Text("Log out?"),
           content: Text("Are you sure you want to sign out?"),
           actions: <Widget>[
@@ -63,9 +64,12 @@ class AppDrawer extends StatelessWidget {
             CupertinoDialogAction(
                 textStyle: TextStyle(color: Colors.red),
                 isDefaultAction: true,
-                onPressed: () {
-                  Navigator.pop(context);
-                },
+                // onPressed: () {
+                // //  Navigator.pop(context);
+                // },
+                onPressed: () => context
+                    .bloc<AuthenticationBloc>()
+                    .add(AuthenticationLogoutRequested()),
                 child: Text("Log out")),
           ],
         ));

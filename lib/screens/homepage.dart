@@ -1,12 +1,17 @@
 import 'package:easy_shop/widgets/grids.dart';
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:relative_scale/relative_scale.dart';
 import '../screens/cart_screen.dart';
 import '../widgets/app_drawer.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:flappy_search_bar/flappy_search_bar.dart';
 
 class HomePage extends StatelessWidget {
   //const HomePage({Key key}) : super(key: key);
+  static Route route() {
+    return MaterialPageRoute<void>(builder: (_) => HomePage());
+  }
+
   static const routeName = "/homeScreen";
 
   static final List<String> imgList = [
@@ -16,19 +21,6 @@ class HomePage extends StatelessWidget {
     "https://cdn.pixabay.com/photo/2017/04/03/21/46/snacks-2199659_960_720.jpg",
     "https://cdn.pixabay.com/photo/2016/07/05/17/42/candy-1499082_960_720.jpg",
   ];
-
-  final List<Widget> imageSliders = imgList
-      .map((item) => Container(
-            child: Container(
-              margin: EdgeInsets.all(5.0),
-              child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                child: Image.network(item,
-                    fit: BoxFit.cover, width: double.infinity),
-              ),
-            ),
-          ))
-      .toList();
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +33,7 @@ class HomePage extends StatelessWidget {
             elevation: 0.0,
             bottomOpacity: 0.0,
             actions: [
+              //SearchBar(onSearch: null, onItemFound: null),
               IconButton(
                   icon: Icon(Icons.shopping_cart),
                   color: Colors.blue,
@@ -62,17 +55,25 @@ class HomePage extends StatelessWidget {
             children: <Widget>[
               SizedBox(
                 child: Container(
-                  height: sy(150),
+                  height: sy(140),
                   width: double.infinity,
                   margin:
                       EdgeInsets.only(left: sx(5), right: sx(5), top: sx(5)),
-                  child: CarouselSlider(
-                    items: imageSliders,
-                    options: CarouselOptions(
-                      autoPlay: true,
-                      aspectRatio: 2.0,
-                      enlargeCenterPage: true,
-                    ),
+                  child: Swiper(
+                    viewportFraction: 0.8,
+                    scale: 0.9,
+                    autoplay: true,
+                    loop: true,
+                    itemCount: imgList.length,
+                    itemBuilder: (context, index) {
+                      return ClipRRect(
+                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                        child: Image.network(
+                          imgList[index],
+                          fit: BoxFit.cover,
+                        ),
+                      );
+                    },
                   ),
                 ),
               ),

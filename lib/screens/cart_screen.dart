@@ -1,9 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:easy_shop/PhLogin/Model/location_detail.dart';
-import 'package:easy_shop/Utils/theme.dart';
 import 'package:easy_shop/models/cart.dart';
-import 'package:easy_shop/screens/delivary_screen.dart';
-import 'package:easy_shop/services/location_serviced.dart';
+import 'package:easy_shop/screens/address_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -113,65 +110,21 @@ class _CartScreenState extends State<CartScreen> {
                 ),
               ),
               Container(
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                constraints: const BoxConstraints(maxWidth: 500),
+                padding: const EdgeInsets.all(19.0),
+                height: 80,
+                width: double.infinity,
                 child: RaisedButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12)),
                   onPressed: () {
-                    if (cart.items.length > 0) {
-                      setState(() {
-                        loading = true;
-                      });
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) {
-                          return StreamProvider<UserLocation>(
-                            create: (context) =>
-                                LocationService().locationStream,
-                            child: DeliveryScreen(),
-                          );
-                        }
-                            // } => DeliveryScreen(
-                            //     // user: user,
-                            //     ),
-                            ),
-                      );
-                    }
+                    Navigator.of(context).pushNamed(AddressScreen.routeName);
                   },
-                  color: Colors.white,
-                  shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(14))),
-                  child: Container(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                    child: loading
-                        ? Center(child: CircularProgressIndicator())
-                        : Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Text(
-                                'Check Out',
-                                style: TextStyle(
-                                    color: MyColors.primaryColor, fontSize: 20),
-                              ),
-                              Container(
-                                padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(20)),
-                                  color: MyColors.primaryColorLight,
-                                ),
-                                child: Icon(
-                                  Icons.arrow_forward_ios,
-                                  color: Colors.white,
-                                  size: 16,
-                                ),
-                              )
-                            ],
-                          ),
-                  ),
+                  child: Text("Order now",
+                      style: TextStyle(color: Colors.white, fontSize: 18.5)),
+                  color: Colors.black,
+                  splashColor: Colors.lightBlue,
                 ),
-              ),
+              )
             ],
           ),
         ),
