@@ -117,8 +117,8 @@ class _ProductsGridState extends State<ProductsGrid> {
     final double deviceWidth = MediaQuery.of(context).size.width;
     _crossAxisCount = getDeviceType(deviceWidth);
     final cart = Provider.of<Cart>(context, listen: false);
-    print("GroupId : " + widget.groupId);
-    print("SubGroupId : " + widget.subGroupId);
+  //  print("GroupId : " + widget.groupId);
+  //  print("SubGroupId : " + widget.subGroupId);
     return RelativeBuilder(
       builder: (context, screenHeight, screenWidth, sy, sx) {
         if (_isLoading) {
