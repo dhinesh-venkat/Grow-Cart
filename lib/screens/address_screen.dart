@@ -1,12 +1,10 @@
 import 'package:easy_shop/models/address.dart';
 import 'package:easy_shop/models/api_response.dart';
 import 'package:easy_shop/models/cart.dart';
-import 'package:easy_shop/payment/payment_gateway.dart';
+import 'package:easy_shop/screens/invoice.dart';
 import 'package:easy_shop/services/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import '../widgets/get_customer_details.dart';
 import 'package:provider/provider.dart';
@@ -27,7 +25,6 @@ class _AddressScreenState extends State<AddressScreen> {
 
   String customerId;
   bool _isGetID = false;
-  bool _isAddressStored = false;
   APIResponse<List<dynamic>> _addressResponse;
   APIResponse<List<Address>> _getAddress;
   bool _saveAddress = false;
@@ -69,7 +66,6 @@ class _AddressScreenState extends State<AddressScreen> {
     setState(() {
       //  nameController.text = ;
       //  phoneNumberController.text = ;
-      print(address.pincode);
       pincodeController.text = address.pincode;
       houseNoController.text = address.doorNo.replaceAll('%', ' ');
       streetController.text = address.street.replaceAll('%', ' ');
@@ -113,8 +109,7 @@ class _AddressScreenState extends State<AddressScreen> {
       if (_addressResponse.error) {
         print("Something went wrong while storing address");
       } else {
-        //  print(_addressResponse.data);
-        _isAddressStored = true;
+          print(_addressResponse.data);
       }
     } else {
       print("Something went wrong in the backend");
@@ -211,36 +206,39 @@ class _AddressScreenState extends State<AddressScreen> {
                 )
               ],
             ),
-            GetBuilder<PaymentGateway>(
-                init: PaymentGateway(),
-                builder: (value) {
-                  return Container(
-                    padding: const EdgeInsets.only(bottom: 19.0),
-                    height: 65,
-                    width: double.infinity,
-                    child: RaisedButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12)),
-                      onPressed: () {
-                        if (_saveAddress) {
-                          saveAddressInServer();
-                        }
-
-                        value.dispatchpayment(
-                            (netAmount * 100).toInt(),
-                            nameController.text,
-                            int.parse(phoneNumberController.text),
-                            mail,
-                            'GooglePay');
-                      },
-                      child: Text("Continue",
-                          style:
-                              TextStyle(color: Colors.white, fontSize: 18.5)),
-                      color: Colors.black,
-                      splashColor: Colors.lightBlue,
-                    ),
-                  );
-                })
+            Container(
+              padding: const EdgeInsets.only(bottom: 19.0),
+              height: 65,
+              width: double.infinity,
+              child: RaisedButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12)),
+                onPressed: () {
+                  if (_saveAddress) {
+                    saveAddressInServer();
+                  }
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Invoice(
+                          netAmount: (netAmount * 100).toInt(),
+                          mail: mail,
+                          name: nameController.text,
+                          phoneNumber: int.parse(phoneNumberController.text),
+                          pincode: pincodeController.text,
+                          houseNo: houseNoController.text,
+                          street: streetController.text,
+                          landmark: landmarkController.text,
+                          city: townController.text,
+                        ),
+                      ));
+                },
+                child: Text("Continue",
+                    style: TextStyle(color: Colors.white, fontSize: 18.5)),
+                color: Colors.black,
+                splashColor: Colors.lightBlue,
+              ),
+            )
           ],
         ),
       ),

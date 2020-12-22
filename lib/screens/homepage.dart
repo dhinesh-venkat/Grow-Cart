@@ -4,7 +4,6 @@ import 'package:relative_scale/relative_scale.dart';
 import '../screens/cart_screen.dart';
 import '../widgets/app_drawer.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:flappy_search_bar/flappy_search_bar.dart';
 
 class HomePage extends StatelessWidget {
   //const HomePage({Key key}) : super(key: key);
