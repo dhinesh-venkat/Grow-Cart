@@ -147,6 +147,7 @@ class _AddressScreenState extends State<AddressScreen> {
                       onPressed: () async {
                         print("Calling address from server");
                         customerId = await getCustomerDetails(userService);
+                        print("Customer ID : "+customerId);
                         if (customerId == "Not found") {
                           // User have no ID yet
                           print("ID not found");

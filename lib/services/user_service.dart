@@ -11,26 +11,17 @@ class UserService {
 
   Future<APIResponse<void>> storeUserDetails(
       int mobileNumber, String name, String mail, String deviceId) {
-    return http
-        .get(url +
-            "strCUSTOMER_REGMOBILE=" +
-            mobileNumber.toString().trim() +
-            "&strCUSTOMER_NAME=" +
-            name.trim() +
-            "&strEmailID=" +
-            mail.trim() +
-            "&strDeviceid=" +
-            deviceId.trim())
-        .then((data) {
-      print(url +
-          "strCUSTOMER_REGMOBILE=" +
-          mobileNumber.toString().trim() +
-          "&strCUSTOMER_NAME=" +
-          name.trim() +
-          "&strEmailID=" +
-          mail.trim() +
-          "&strDeviceid=" +
-          deviceId.trim());
+    final String _url = url +
+        "strCUSTOMER_REGMOBILE=" +
+        mobileNumber.toString().trim() +
+        "&strCUSTOMER_NAME=" +
+        name.trim() +
+        "&strEmailID=" +
+        mail.trim() +
+        "&strDeviceid=" +
+        deviceId.trim();
+    print(_url);
+    return http.get(_url).then((data) {
       if (data.statusCode == 200) {
         final jsonData = json.decode(data.body);
         print("Details stored successfully");
