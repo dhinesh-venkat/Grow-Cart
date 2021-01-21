@@ -41,7 +41,7 @@ class ModalWithNavigator extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(left: 12, bottom: 8),
       child: Text(
-        text,
+        text + ',',
         style: style,
       ),
     );
@@ -55,14 +55,13 @@ class ModalWithNavigator extends StatelessWidget {
       },
       child: Container(
         margin: EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 10),
-        height: 200,
         width: width,
         padding: EdgeInsets.only(top: 5),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           color: Color.fromRGBO(66, 67, 69, 1),
         ),
-        child: Column(
+        child: Wrap(
           children: <Widget>[
             customText(
               "Name",

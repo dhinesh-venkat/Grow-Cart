@@ -89,6 +89,8 @@ class _AddressScreenState extends State<AddressScreen> {
           int.parse(phoneNumberController.text), userService);
       // Getting the customer Id after storing
       customerId = await getCustomerDetails(userService);
+      print("************");
+      print(customerId);
       _isGetID = true;
     } else if (_idResponse == "Error") {
       // If this block gets executed there is a problem in the database
@@ -109,7 +111,8 @@ class _AddressScreenState extends State<AddressScreen> {
       if (_addressResponse.error) {
         print("Something went wrong while storing address");
       } else {
-          print(_addressResponse.data);
+        print("Address saved");
+        print(_addressResponse.data);
       }
     } else {
       print("Something went wrong in the backend");
@@ -120,6 +123,7 @@ class _AddressScreenState extends State<AddressScreen> {
   Widget build(BuildContext context) {
     final double netAmount =
         Provider.of<Cart>(context, listen: false).totalAmount;
+    final node = FocusScope.of(context);
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
@@ -130,127 +134,138 @@ class _AddressScreenState extends State<AddressScreen> {
       ),
       body: Container(
         margin: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Column(
-              children: <Widget>[
-                SizedBox(
-                  width: double.infinity,
-                  height: 45,
-                  child: RaisedButton(
-                    onPressed: () async {
-                      customerId = await getCustomerDetails(userService);
-                      if (customerId == "Not found") {
-                        // User have no ID yet
-                      } else {
-                        _getAddress = await addressService.getExistingAddresses(
-                          (double.parse(customerId).toInt()).toString(),
-                        );
-                        if (_getAddress.error) {
-                          print("Error while getting address");
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Column(
+                children: <Widget>[
+                  SizedBox(
+                    width: double.infinity,
+                    height: 45,
+                    child: RaisedButton(
+                      onPressed: () async {
+                        print("Calling address from server");
+                        customerId = await getCustomerDetails(userService);
+                        if (customerId == "Not found") {
+                          // User have no ID yet
+                          print("ID not found");
                         } else {
-                          final Address address =
-                              await showCupertinoModalBottomSheet(
-                            expand: true,
-                            context: context,
-                            backgroundColor: Colors.transparent,
-                            builder: (context) => ModalWithNavigator(
-                              addressList: _getAddress.data,
-                            ),
+                          _getAddress =
+                              await addressService.getExistingAddresses(
+                            (double.parse(customerId).toInt()).toString(),
                           );
+                          if (_getAddress.error) {
+                            print("Error while getting address");
+                          } else {
+                            print("waiting for modal sheet");
+                            final Address address =
+                                await showCupertinoModalBottomSheet(
+                              expand: true,
+                              context: context,
+                              backgroundColor: Colors.transparent,
+                              builder: (context) => ModalWithNavigator(
+                                addressList: _getAddress.data,
+                              ),
+                            );
 
-                          fillAddress(address);
+                            fillAddress(address);
+                          }
                         }
-                      }
-                    },
-                    child: Text(
-                      "Choose an Existing Address",
-                      style: whiteText,
+                      },
+                      child: Text(
+                        "Choose an Existing Address",
+                        style: whiteText,
+                      ),
+                      color: Colors.black,
+                      splashColor: Colors.lightBlue,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(6)),
                     ),
-                    color: Colors.black,
-                    splashColor: Colors.lightBlue,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(6)),
                   ),
-                ),
-                SizedBox(height: 20),
-                getCupertinoTextField(
-                    "Full name", TextInputType.name, nameController),
-                getCupertinoTextField("Mobile number", TextInputType.phone,
-                    phoneNumberController),
-                getCupertinoTextField(
-                    "PIN code", TextInputType.number, pincodeController),
-                getCupertinoTextField(
-                    "Flat, House no, Building, Company, Apartment",
-                    TextInputType.streetAddress,
-                    houseNoController),
-                getCupertinoTextField("Area, Colony, Street, Sector, Village",
-                    TextInputType.streetAddress, streetController),
-                getCupertinoTextField("Landmark", TextInputType.streetAddress,
-                    landmarkController),
-                getCupertinoTextField(
-                    "Town/City", TextInputType.text, townController),
-                SizedBox(height: 15),
-                Row(
-                  children: <Widget>[
-                    Checkbox(
-                      onChanged: onSaveAddressChanged,
-                      value: _saveAddress,
-                    ),
-                    Text(
-                      "Save Address",
-                      style: TextStyle(fontSize: 16),
-                    )
-                  ],
-                )
-              ],
-            ),
-            Container(
-              padding: const EdgeInsets.only(bottom: 19.0),
-              height: 65,
-              width: double.infinity,
-              child: RaisedButton(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12)),
-                onPressed: () {
-                  if (_saveAddress) {
-                    saveAddressInServer();
-                  }
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => Invoice(
-                          netAmount: (netAmount * 100).toInt(),
-                          mail: mail,
-                          name: nameController.text,
-                          phoneNumber: int.parse(phoneNumberController.text),
-                          pincode: pincodeController.text,
-                          houseNo: houseNoController.text,
-                          street: streetController.text,
-                          landmark: landmarkController.text,
-                          city: townController.text,
-                        ),
-                      ));
-                },
-                child: Text("Continue",
-                    style: TextStyle(color: Colors.white, fontSize: 18.5)),
-                color: Colors.black,
-                splashColor: Colors.lightBlue,
+                  SizedBox(height: 20),
+                  getCupertinoTextField("Full name", TextInputType.name,
+                      nameController, () => node.nextFocus()),
+                  getCupertinoTextField("Mobile number", TextInputType.phone,
+                      phoneNumberController, () => node.nextFocus()),
+                  getCupertinoTextField("PIN code", TextInputType.number,
+                      pincodeController, () => node.nextFocus()),
+                  getCupertinoTextField(
+                      "Flat, House no, Building, Company, Apartment",
+                      TextInputType.streetAddress,
+                      houseNoController,
+                      () => node.nextFocus()),
+                  getCupertinoTextField(
+                      "Area, Colony, Street, Sector, Village",
+                      TextInputType.streetAddress,
+                      streetController,
+                      () => node.nextFocus()),
+                  getCupertinoTextField("Landmark", TextInputType.streetAddress,
+                      landmarkController, () => node.nextFocus()),
+                  getCupertinoTextField("Town/City", TextInputType.text,
+                      townController, () => node.unfocus()),
+                  SizedBox(height: 15),
+                  Row(
+                    children: <Widget>[
+                      Checkbox(
+                        onChanged: onSaveAddressChanged,
+                        value: _saveAddress,
+                      ),
+                      Text(
+                        "Save Address",
+                        style: TextStyle(fontSize: 16),
+                      )
+                    ],
+                  )
+                ],
               ),
-            )
-          ],
+              Container(
+                padding: const EdgeInsets.only(bottom: 19.0),
+                height: 65,
+                width: double.infinity,
+                child: RaisedButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12)),
+                  onPressed: () {
+                    if (_saveAddress) {
+                      saveAddressInServer();
+                    }
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Invoice(
+                            netAmount: (netAmount * 100).toInt(),
+                            mail: mail,
+                            name: nameController.text,
+                            phoneNumber: int.parse(phoneNumberController.text),
+                            pincode: pincodeController.text,
+                            houseNo: houseNoController.text,
+                            street: streetController.text,
+                            landmark: landmarkController.text,
+                            city: townController.text,
+                          ),
+                        ));
+                  },
+                  child: Text("Continue",
+                      style: TextStyle(color: Colors.white, fontSize: 18.5)),
+                  color: Colors.black,
+                  splashColor: Colors.lightBlue,
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
   }
 
   Widget getCupertinoTextField(String placeholder, TextInputType keyboardType,
-      TextEditingController controller) {
+      TextEditingController controller, Function onEnter) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 7.5),
       height: 45,
       child: CupertinoTextField(
+        onEditingComplete: onEnter,
         placeholder: placeholder,
         placeholderStyle: TextStyle(color: Colors.black38),
         keyboardType: keyboardType,

@@ -12,7 +12,7 @@ void storeCustomerDetails(
   final String mail = getUserMail();
   print("Name : " +
       name +
-      " | Mobile :" +
+      " | Mobile : " +
       mobileNumber.toString() +
       " | DeviceID : " +
       deviceId +
@@ -24,5 +24,6 @@ void storeCustomerDetails(
 Future<String> getCustomerDetails(UserService service) async {
   final String deviceId = await PlatformDeviceId.getDeviceId;
   final String response = await service.getUserDetails(deviceId);
+  print("Device ID : " + deviceId);
   return response;
 }

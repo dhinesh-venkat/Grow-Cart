@@ -14,16 +14,26 @@ class UserService {
     return http
         .get(url +
             "strCUSTOMER_REGMOBILE=" +
-            mobileNumber.toString() +
+            mobileNumber.toString().trim() +
             "&strCUSTOMER_NAME=" +
-            name +
+            name.trim() +
             "&strEmailID=" +
-            mail +
+            mail.trim() +
             "&strDeviceid=" +
-            deviceId)
+            deviceId.trim())
         .then((data) {
+      print(url +
+          "strCUSTOMER_REGMOBILE=" +
+          mobileNumber.toString().trim() +
+          "&strCUSTOMER_NAME=" +
+          name.trim() +
+          "&strEmailID=" +
+          mail.trim() +
+          "&strDeviceid=" +
+          deviceId.trim());
       if (data.statusCode == 200) {
         final jsonData = json.decode(data.body);
+        print("Details stored successfully");
         print(jsonData);
       }
       return APIResponse<void>(error: true, errorMessage: "An error occured");
@@ -32,8 +42,6 @@ class UserService {
       return APIResponse<void>(error: true, errorMessage: "An error occured");
     });
   }
-
- 
 
   Future<String> getUserDetails(String deviceId) {
     return http

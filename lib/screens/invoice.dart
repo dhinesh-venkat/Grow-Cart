@@ -138,62 +138,64 @@ class Invoice extends StatelessWidget {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
             border: Border.all(color: Colors.grey)),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                "Shipping to",
-                style: heading,
+        child: SingleChildScrollView(
+                  child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "Shipping to",
+                  style: heading,
+                ),
               ),
-            ),
-            Divider(
-              color: Colors.grey,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0, bottom: 5.0),
-              child: Text(
-                name ?? "",
-                style: body,
+              Divider(
+                color: Colors.grey,
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0, bottom: 5.0),
-              child: Text(
-                houseNo ?? "",
-                style: body,
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0, bottom: 5.0),
+                child: Text(
+                  name ?? "",
+                  style: body,
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0, bottom: 5.0),
-              child: Text(
-                street ?? "",
-                style: body,
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0, bottom: 5.0),
+                child: Text(
+                  houseNo ?? "",
+                  style: body,
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0, bottom: 5.0),
-              child: Text(
-                landmark ?? "",
-                style: body,
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0, bottom: 5.0),
+                child: Text(
+                  street ?? "",
+                  style: body,
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0, bottom: 5.0),
-              child: Text(
-                "${city ?? ""} ${pincode ?? ""} TN, India",
-                style: body,
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0, bottom: 5.0),
+                child: Text(
+                  landmark ?? "",
+                  style: body,
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0, bottom: 5.0),
-              child: Text(
-                phoneNumber.toString() ?? "",
-                style: body,
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0, bottom: 5.0),
+                child: Text(
+                  "${city ?? ""} ${pincode ?? ""} TN, India",
+                  style: body,
+                ),
               ),
-            ),
-          ],
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0, bottom: 5.0),
+                child: Text(
+                  phoneNumber.toString() ?? "",
+                  style: body,
+                ),
+              ),
+            ],
+          ),
         ));
   }
 
@@ -209,73 +211,75 @@ class Invoice extends StatelessWidget {
               backgroundColor: Theme.of(context).primaryColor,
               title: Text("Invoice"),
             ),
-            body: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                  child: header1(),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                  child: Divider(
-                    color: Colors.grey.withOpacity(0.75),
+            body: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                    child: header1(),
                   ),
-                ),
-                Container(
-                  margin: EdgeInsets.all(15),
-                  height: 300,
-                  child: SingleChildScrollView(
-                      scrollDirection: Axis.vertical,
-                      child: displayItems(cart.items)),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                  child: Divider(
-                    color: Colors.grey.withOpacity(0.75),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                    child: Divider(
+                      color: Colors.grey.withOpacity(0.75),
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      Text(
-                        "Total",
-                        style: body,
-                      ),
-                      Text(
-                        '₹' + cart.totalAmount.toString(),
-                        style: body,
-                      ),
-                    ],
+                  Container(
+                    margin: EdgeInsets.all(15),
+                    height: 300,
+                    child: SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: displayItems(cart.items)),
                   ),
-                ),
-                displayAddress(),
-                GetBuilder<PaymentGateway>(
-                    init: PaymentGateway(),
-                    builder: (value) {
-                      return Container(
-                        padding: const EdgeInsets.only(
-                            bottom: 15, left: 10, right: 10),
-                        height: 65,
-                        width: double.infinity,
-                        child: RaisedButton(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12)),
-                          onPressed: () {
-                            value.dispatchpayment(netAmount, name, phoneNumber,
-                                mail, 'GooglePay');
-                          },
-                          child: Text("Proceed to payment",
-                              style: TextStyle(
-                                  color: Colors.white, fontSize: 18.5)),
-                          color: Color.fromRGBO(248, 66, 100, 1),
-                          splashColor: Colors.lightBlue,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                    child: Divider(
+                      color: Colors.grey.withOpacity(0.75),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        Text(
+                          "Total",
+                          style: body,
                         ),
-                      );
-                    })
-              ],
+                        Text(
+                          '₹' + cart.totalAmount.toString(),
+                          style: body,
+                        ),
+                      ],
+                    ),
+                  ),
+                  displayAddress(),
+                  GetBuilder<PaymentGateway>(
+                      init: PaymentGateway(),
+                      builder: (value) {
+                        return Container(
+                          padding: const EdgeInsets.only(
+                              bottom: 15, left: 10, right: 10),
+                          height: 65,
+                          width: double.infinity,
+                          child: RaisedButton(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12)),
+                            onPressed: () {
+                              value.dispatchpayment(netAmount, name,
+                                  phoneNumber, mail, 'GooglePay');
+                            },
+                            child: Text("Proceed to payment",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 18.5)),
+                            color: Color.fromRGBO(248, 66, 100, 1),
+                            splashColor: Colors.lightBlue,
+                          ),
+                        );
+                      })
+                ],
+              ),
             ));
       },
     );
