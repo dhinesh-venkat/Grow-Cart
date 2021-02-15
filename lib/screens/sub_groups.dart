@@ -62,7 +62,7 @@ class _SubGroupScreenState extends State<SubGroupScreen> {
         padding: EdgeInsets.all(8.0),
         child: Text(
           group.value,
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.black),
         ),
       ),
     );
@@ -81,8 +81,8 @@ class _SubGroupScreenState extends State<SubGroupScreen> {
         if (_isLoading) {
           // return Center(child: CircularProgressIndicator());
           return Scaffold(
-            backgroundColor: Theme.of(context).primaryColor,
-            body: loadingAnimation());
+              backgroundColor: Theme.of(context).primaryColor,
+              body: loadingAnimation());
         }
         if (_apiResponse.error) {
           return Center(child: Text(_apiResponse.errorMessage));

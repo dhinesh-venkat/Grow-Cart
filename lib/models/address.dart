@@ -1,4 +1,6 @@
 class Address {
+  String customerName;
+  String phoneNumber;
   num customerAddressId;
   num customerMasterId;
   String contactPerson;
@@ -14,7 +16,9 @@ class Address {
   String createdDate;
 
   Address(
-      {this.customerAddressId,
+      {this.customerName,
+      this.phoneNumber,
+      this.customerAddressId,
       this.customerMasterId,
       this.contactPerson,
       this.doorNo,
@@ -29,6 +33,8 @@ class Address {
       this.createdDate});
 
   Address.fromJson(Map<String, dynamic> json) {
+    customerName = json['CUSTOMER_NAME'];
+    phoneNumber = json['CUSTOMER_MOBILE'];
     customerAddressId = json['CUSTOMER_ADDRESSID'];
     customerMasterId = json['CUSTOMER_MASTERID'];
     contactPerson = json['CONTACT_PERSON'];

@@ -23,7 +23,8 @@ class _GridsState extends State<Grids> {
   bool _isLoading = false;
   int _crossAxisCount = 0;
   TextStyle itemNameText = const TextStyle(
-      color: Colors.white,
+      //color: Colors.white,
+      color: Colors.black,
       fontSize: 16,
       fontWeight: FontWeight.w600,
       fontFamily: 'Poppins');

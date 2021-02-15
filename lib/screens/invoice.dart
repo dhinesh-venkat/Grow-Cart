@@ -26,8 +26,8 @@ class Invoice extends StatelessWidget {
       this.landmark,
       this.city});
 
-  TextStyle heading = TextStyle(color: Colors.grey, fontSize: 20);
-  TextStyle body = TextStyle(color: Colors.white, fontSize: 18);
+  TextStyle heading = TextStyle(color: Colors.black, fontSize: 20);
+  TextStyle body = TextStyle(color: Colors.black87, fontSize: 18);
   var now = DateTime.now();
   var df = new DateFormat('dd-MM-yyyy');
 
@@ -139,7 +139,7 @@ class Invoice extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
             border: Border.all(color: Colors.grey)),
         child: SingleChildScrollView(
-                  child: Column(
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Padding(

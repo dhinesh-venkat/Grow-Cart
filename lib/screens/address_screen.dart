@@ -64,8 +64,8 @@ class _AddressScreenState extends State<AddressScreen> {
 
   void fillAddress(Address address) {
     setState(() {
-      //  nameController.text = ;
-      //  phoneNumberController.text = ;
+      nameController.text = address.customerName;
+      phoneNumberController.text = address.phoneNumber;
       pincodeController.text = address.pincode;
       houseNoController.text = address.doorNo.replaceAll('%', ' ');
       streetController.text = address.street.replaceAll('%', ' ');
@@ -147,7 +147,7 @@ class _AddressScreenState extends State<AddressScreen> {
                       onPressed: () async {
                         print("Calling address from server");
                         customerId = await getCustomerDetails(userService);
-                        print("Customer ID : "+customerId);
+                        print("Customer ID : " + customerId);
                         if (customerId == "Not found") {
                           // User have no ID yet
                           print("ID not found");
@@ -214,7 +214,7 @@ class _AddressScreenState extends State<AddressScreen> {
                       ),
                       Text(
                         "Save Address",
-                        style: TextStyle(fontSize: 16),
+                        style: TextStyle(fontSize: 16, color: Colors.black),
                       )
                     ],
                   )

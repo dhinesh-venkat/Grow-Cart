@@ -39,13 +39,15 @@ class _ProductsGridState extends State<ProductsGrid> {
   int _crossAxisCount = 0;
 
   TextStyle itemNameText = const TextStyle(
-      color: Colors.white,
+      //color: Colors.white,
+      color: Colors.black,
       fontSize: 16,
       fontWeight: FontWeight.w600,
       fontFamily: 'Poppins');
 
   TextStyle priceText = const TextStyle(
-      color: Colors.white,
+      //color: Colors.white,
+      color: Colors.black,
       fontSize: 20,
       fontWeight: FontWeight.w800,
       fontFamily: 'Fryo');
@@ -117,8 +119,8 @@ class _ProductsGridState extends State<ProductsGrid> {
     final double deviceWidth = MediaQuery.of(context).size.width;
     _crossAxisCount = getDeviceType(deviceWidth);
     final cart = Provider.of<Cart>(context, listen: false);
-  //  print("GroupId : " + widget.groupId);
-  //  print("SubGroupId : " + widget.subGroupId);
+    //  print("GroupId : " + widget.groupId);
+    //  print("SubGroupId : " + widget.subGroupId);
     return RelativeBuilder(
       builder: (context, screenHeight, screenWidth, sy, sx) {
         if (_isLoading) {
@@ -143,9 +145,8 @@ class _ProductsGridState extends State<ProductsGrid> {
                       child: Container(
                         height: sy(110),
                         width: sy(110),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                          //  borderRadius: BorderRadius.circular(15),
+                        decoration: BoxDecoration(color: Colors.white,
+                            //  borderRadius: BorderRadius.circular(15),
                             boxShadow: [
                               BoxShadow(
                                   color: Colors.blueGrey.withOpacity(0.2),
@@ -214,7 +215,8 @@ class _ProductsGridState extends State<ProductsGrid> {
                           onPressed: () {
                             HapticFeedback.lightImpact();
                             cart.addItem(
-                                _apiResponse.data[item].itemId + "/" +
+                                _apiResponse.data[item].itemId +
+                                    "/" +
                                     _selectedPackage[item],
                                 double.parse(_selectedPrices[item]['sr']),
                                 _apiResponse.data[item].itemName,
@@ -269,8 +271,8 @@ class _ProductsGridState extends State<ProductsGrid> {
   Widget getDropDownForPacking(List<Data> list, int index) {
     return DropdownButtonHideUnderline(
         child: DropdownButton(
-      style: TextStyle(color: Colors.white),
-      dropdownColor: Colors.black,
+      style: TextStyle(color: Colors.black),
+      dropdownColor: Colors.white,
       elevation: 8,
       value: _selectedPackage[index],
       items: list.map((item) {

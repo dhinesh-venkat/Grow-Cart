@@ -25,7 +25,7 @@ class AppDrawer extends StatelessWidget {
             ListTile(
               title: Text(
                 "My Orders",
-                style: TextStyle(color: Colors.white, fontSize: 20),
+                style: TextStyle(color: Colors.black, fontSize: 20),
               ),
               onTap: () {
                 Navigator.pop(context);
@@ -35,7 +35,7 @@ class AppDrawer extends StatelessWidget {
             ListTile(
               title: Text(
                 "Sign Out",
-                style: TextStyle(color: Colors.white, fontSize: 20),
+                style: TextStyle(color: Colors.red, fontSize: 20),
               ),
               onTap: () {
                 showAlertDialog(context);

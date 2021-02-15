@@ -8,10 +8,13 @@ final theme = ThemeData(
     headline4: TextStyle(fontSize: 24, color: Colors.white),
     bodyText2:
         TextStyle(fontSize: 14.0, fontFamily: 'Fryo', color: Colors.white),
+    bodyText1:
+        TextStyle(fontSize: 14.0, fontFamily: 'Fryo', color: Colors.black),
   ),
-  primaryColorDark: const Color(0xFF0097A7),
-  primaryColorLight: const Color(0xFFB2EBF2),
-  primaryColor: Color.fromRGBO(66, 67, 69, 1),
+  primaryColorDark: const Color.fromRGBO(36, 36, 32, 1),
+  primaryColorLight: const Color.fromRGBO(241, 241, 241, 1),
+  //primaryColor: Color.fromRGBO(66, 67, 69, 1),
+  primaryColor: Color.fromRGBO(241, 241, 241, 1),
   accentColor: Colors.orange,
 //  scaffoldBackgroundColor: const Color(0xFFE0F2F1),
   inputDecorationTheme: InputDecorationTheme(

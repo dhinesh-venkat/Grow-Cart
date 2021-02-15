@@ -44,7 +44,8 @@ class HomePage extends StatelessWidget {
             title: Text(
               "Easy Shop",
               style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
+                  //color: Colors.white,
                   fontSize: sy(20),
                   fontWeight: FontWeight.bold),
             ),

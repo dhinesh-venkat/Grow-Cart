@@ -43,7 +43,7 @@ class _CartScreenState extends State<CartScreen> {
                 },
                 child: Text(
                   'Clear',
-                  style: TextStyle(color: Colors.blue.shade200),
+                  style: TextStyle(color: Colors.lightBlue),
                 ))
           ],
         ),
@@ -56,13 +56,19 @@ class _CartScreenState extends State<CartScreen> {
                 children: <Widget>[
                   Text(
                     'Cart',
-                    style: Theme.of(context).textTheme.headline3,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline3
+                        .copyWith(color: Colors.black),
                   ),
                   Row(
                     children: [
                       Text(
                         '${cart.itemCount} items',
-                        style: Theme.of(context).textTheme.bodyText2,
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyText2
+                            .copyWith(color: Colors.black),
                       ),
                       SizedBox(
                         width: 15,
@@ -178,7 +184,7 @@ class CartListItem extends StatelessWidget {
                       child: Text(
                         item.itemName,
                         style: TextStyle(
-                            color: Colors.white,
+                            color: Colors.black,
                             fontFamily: 'Fryo',
                             fontSize: 15),
                       ),
@@ -186,7 +192,7 @@ class CartListItem extends StatelessWidget {
                     Text(
                       '₹ ${item.rate * item.quantity}',
                       style: TextStyle(
-                          color: Colors.white,
+                          color: Colors.black,
                           fontSize: 24,
                           fontFamily: 'Fryo',
                           fontWeight: FontWeight.bold),
@@ -203,7 +209,10 @@ class CartListItem extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text('₹ ' + item.rate.toString()),
+                        Text(
+                          '₹ ' + item.rate.toString(),
+                          style: TextStyle(color: Colors.black),
+                        ),
                         IconButton(
                           icon: Icon(Icons.delete),
                           onPressed: () => removeItemCallback(
@@ -219,7 +228,7 @@ class CartListItem extends StatelessWidget {
                     height: 50,
                     width: 110,
                     decoration: BoxDecoration(
-                        border: Border.all(color: Colors.white),
+                        border: Border.all(color: Colors.black),
                         borderRadius: BorderRadius.circular(18)),
                     child: Row(
                       children: <Widget>[
@@ -227,7 +236,7 @@ class CartListItem extends StatelessWidget {
                             icon: Icon(
                               Icons.remove,
                               size: 30,
-                              color: Colors.white,
+                              color: Colors.black,
                             ),
                             onPressed: () {
                               HapticFeedback.lightImpact();
@@ -238,13 +247,13 @@ class CartListItem extends StatelessWidget {
                             }),
                         Text(
                           item.quantity.toString(),
-                          style: TextStyle(fontSize: 15),
+                          style: TextStyle(fontSize: 15, color: Colors.black),
                         ),
                         IconButton(
                           icon: Icon(
                             Icons.add,
                             size: 30,
-                            color: Colors.white,
+                            color: Colors.black,
                           ),
                           onPressed: () {
                             HapticFeedback.lightImpact();
